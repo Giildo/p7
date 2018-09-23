@@ -1,3 +1,9 @@
 api_login_check:
     path: /api/login_check
     methods: [POST]
+
+Phone_show:
+    path: /api/phone/{id}
+    methods: [GET]
+    requirements:
+        id: "[a-zA-Z0-9-]+"

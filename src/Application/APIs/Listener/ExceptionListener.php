@@ -45,13 +45,9 @@ class ExceptionListener
                 $exception->getCode()
             );
 
-            $statusCode = ($exception->getCode() === ItemNotFoundException::PHONE_NOT_FOUND) ?
-                $statusCode = self::NOT_FOUND :
-                $statusCode = self::OK;
-
             $response = $this->JSONResponder->response(
                 $content,
-                $statusCode
+                self::NOT_FOUND
             );
 
             $event->setResponse($response);

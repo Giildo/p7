@@ -17,13 +17,12 @@ class PhoneRepository extends ServiceEntityRepository
     /**
      * @param InputInterface|null $inputFilters
      *
-     * @return Phone[]|array
+     * @return array
      */
     public function loadPhonesWithFilters(?InputInterface $inputFilters = null): array
     {
         $qb = $this->createQueryBuilder('phone')
-                   ->innerJoin('phone.memories', 'memories')
-                   ->addSelect('memories');
+                   ->select('phone.id', 'phone.brand', 'phone.os', 'phone.name');
 
         if ($inputFilters->getLimit() !== 0) {
             $qb->setMaxResults($inputFilters->getLimit());
