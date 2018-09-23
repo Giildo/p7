@@ -9,6 +9,7 @@ class ItemNotFoundException extends Exception
     const PHONE_NOT_FOUND = 1;
     const PHONE_NOT_FOUND_WITH_PARAM = 2;
     const PHONE_NOT_FOUND_WITH_THIS_BRAND = 3;
+    const PHONE_NOT_FOUND_WITH_THIS_ID = 4;
 
     public function __construct(int $code = 0)
     {
@@ -30,6 +31,10 @@ class ItemNotFoundException extends Exception
 
             case self::PHONE_NOT_FOUND_WITH_THIS_BRAND:
                 $message = 'Aucun portable de cette marque n\'a été trouvé dans la base de données.';
+                break;
+
+            case self::PHONE_NOT_FOUND_WITH_THIS_ID:
+                $message = 'Aucun portable n\'a été trouvé dans la base de données avec cet identifiant.';
                 break;
         };
 

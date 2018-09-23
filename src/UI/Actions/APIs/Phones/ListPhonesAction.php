@@ -41,7 +41,7 @@ class ListPhonesAction
     }
 
     /**
-     * @Route(path="/phones", name="Phone_list")
+     * @Route(path="/phones", name="Phone_list", methods={"GET"})
      *
      * @param Request $request
      *
