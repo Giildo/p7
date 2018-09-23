@@ -1,3 +1,4 @@
-controllers:
-    resource: ../../src/Controller/
+api:
+    resource: ../../src/UI/Actions/APIs
     type: annotation
+    prefix: /api
