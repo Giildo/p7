@@ -3,9 +3,11 @@
 namespace App\Domain\Repositories;
 
 use App\Application\APIs\Interfaces\InputInterface;
+use App\Domain\Models\Interfaces\PhoneInterface;
 use App\Domain\Models\Phone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
 
 class PhoneRepository extends ServiceEntityRepository
 {
@@ -38,5 +40,21 @@ class PhoneRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return PhoneInterface|null
+     *
+     * @throws NonUniqueResultException
+     */
+    public function loadOnePhoneById(string $id): ?PhoneInterface
+    {
+        return $this->createQueryBuilder('phone')
+                    ->where('phone.id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getOneOrNullResult();
     }
 }
