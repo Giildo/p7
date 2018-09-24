@@ -1,27 +1,26 @@
 <?php
 
-namespace App\Application\APIs\Handlers;
+namespace App\Application\APIs\Phones\All\Handlers;
 
-use App\Application\APIs\Interfaces\HandlerInterface;
 use App\Application\APIs\Interfaces\InputInterface;
+use App\Application\APIs\Phones\All\Handlers\Interfaces\HandlerPhonesInterface;
 use App\Application\APIs\Phones\All\InputItems\PhoneInput;
 use Symfony\Component\HttpFoundation\Request;
 
-class Handler implements HandlerInterface
+class Handler implements HandlerPhonesInterface
 {
-
     /**
      * @param Request $request
-     * @param string $category
+     * @param array|null $params
      *
      * @return InputInterface
      */
-    public function handle(Request $request, string $category): InputInterface
+    public function handle(Request $request, ?array $params = []): InputInterface
     {
         return new PhoneInput(
             (int)$request->query->get('limit') ?? null,
             (int)$request->query->get('offset') ?? null,
-            $request->query->get($category) ?? null
+            $request->query->get($params['category']) ?? null
         );
     }
 }

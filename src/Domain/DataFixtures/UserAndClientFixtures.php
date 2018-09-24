@@ -2,13 +2,14 @@
 
 namespace App\Domain\DataFixtures;
 
+use App\Domain\Models\Client;
 use App\Domain\Models\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class UserAndClientFixtures extends Fixture
 {
     /**
      * @var PasswordEncoderInterface
@@ -31,13 +32,29 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $user = new User(
+        $client = new Client(
+            'DoeSarl',
+            $this->encoder->encodePassword('12345678', '')
+        );
+        $manager->persist($client);
+        $manager->flush();
+
+        $user1 = new User(
             'JohnDoe',
             $this->encoder->encodePassword('12345678', ''),
-            ['ROLE_USER']
+            ['ROLE_USER'],
+            $client
         );
+        $manager->persist($user1);
 
-        $manager->persist($user);
+        $user2 = new User(
+            'JaneDoe',
+            $this->encoder->encodePassword('12345678', ''),
+            ['ROLE_USER'],
+            $client
+        );
+        $manager->persist($user2);
+
         $manager->flush();
     }
 }

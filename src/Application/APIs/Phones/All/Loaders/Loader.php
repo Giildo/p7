@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Application\APIs\Phones\All\Helpers;
+namespace App\Application\APIs\Phones\All\Loaders;
 
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
 use App\Application\APIs\Interfaces\InputInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;
-use App\Application\APIs\Phones\All\Helpers\Interfaces\LoaderInterface;
+use App\Application\APIs\Phones\All\InputItems\Interfaces\InputPhoneInterface;
+use App\Application\APIs\Phones\All\Loaders\Interfaces\LoaderPhoneInterface;
 use App\Application\APIs\Phones\All\OutputItems\PhoneOutput;
 use App\Application\APIs\Phones\All\OutputList\PhonesOutputList;
 use App\Domain\Repositories\PhoneRepository;
 
-class Loader implements LoaderInterface
+class Loader implements LoaderPhoneInterface
 {
     /**
      * @var PhoneRepository
@@ -36,7 +37,7 @@ class Loader implements LoaderInterface
     }
 
     /**
-     * @param InputInterface|null $inputFilters
+     * @param InputPhoneInterface|InputInterface|null $inputFilters
      *
      * @return OutputListInterface|null
      *
@@ -62,15 +63,17 @@ class Loader implements LoaderInterface
             throw new ItemNotFoundException(ItemNotFoundException::PHONE_NOT_FOUND_WITH_PARAM);
         }
 
-        $list = [];
+        $outputItem = new PhonesOutputList();
 
         foreach ($phones as $phone) {
-            $list[] = new PhoneOutput(
-                $phone,
-                $this->hateoasBuilder->build('Phone_show', ['id' => $phone['id']], 'self', 'GET')
+            $outputItem->addOutputItem(
+                new PhoneOutput(
+                    $phone,
+                    $this->hateoasBuilder->build('Phone_show', ['id' => $phone['id']], 'self', 'GET')
+                )
             );
         }
 
-        return new PhonesOutputList($list);
+        return $outputItem;
     }
 }

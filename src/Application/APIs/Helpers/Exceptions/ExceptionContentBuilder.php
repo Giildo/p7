@@ -32,12 +32,6 @@ class ExceptionContentBuilder implements ExceptionContentBuilderInterface
         $content = [
             'id'      => $code,
             'message' => $message,
-            'links'   => $this->hateoasBuilder->build(
-                'Phone_list',
-                [],
-                'list',
-                'GET'
-            )
         ];
 
         return new ExceptionContent($content);

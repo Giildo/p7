@@ -2,8 +2,8 @@
 
 namespace App\UI\Actions\APIs\Phones;
 
-use App\Application\APIs\Handlers\Handler;
-use App\Application\APIs\Phones\All\Helpers\Interfaces\LoaderInterface;
+use App\Application\APIs\Phones\All\Handlers\Interfaces\HandlerPhonesInterface;
+use App\Application\APIs\Phones\All\Loaders\Interfaces\LoaderPhoneInterface;
 use App\UI\Responders\Interfaces\OutputJSONResponderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ListPhonesAction
 {
     /**
-     * @var Handler
+     * @var HandlerPhonesInterface
      */
     private $phoneHandler;
     /**
@@ -20,20 +20,20 @@ class ListPhonesAction
      */
     private $JSONResponder;
     /**
-     * @var LoaderInterface
+     * @var LoaderPhoneInterface
      */
     private $loader;
 
     /**
      * ListPhonesAction constructor.
-     * @param Handler $phoneHandler
+     * @param HandlerPhonesInterface $phoneHandler
      * @param OutputJSONResponderInterface $JSONResponder
-     * @param LoaderInterface $loader
+     * @param LoaderPhoneInterface $loader
      */
     public function __construct(
-        Handler $phoneHandler,
+        HandlerPhonesInterface $phoneHandler,
         OutputJSONResponderInterface $JSONResponder,
-        LoaderInterface $loader
+        LoaderPhoneInterface $loader
     ) {
         $this->phoneHandler = $phoneHandler;
         $this->JSONResponder = $JSONResponder;
@@ -49,7 +49,7 @@ class ListPhonesAction
      */
     public function list(Request $request): Response
     {
-        $input = $this->phoneHandler->handle($request, 'brand');
+        $input = $this->phoneHandler->handle($request, ['category' => 'brand']);
 
         $outputList = $this->loader->load($input);
 

@@ -3,20 +3,20 @@
 namespace App\Application\APIs\Phones\All\OutputList;
 
 use App\Application\APIs\Interfaces\OutputItemInterface;
-use App\Application\APIs\Interfaces\OutputListInterface;
+use App\Application\APIs\Phones\All\OutputList\Interfaces\PhoneOutputListInterface;
 
-class PhonesOutputList implements OutputListInterface, OutputItemInterface
+class PhonesOutputList implements PhoneOutputListInterface, OutputItemInterface
 {
     /**
      * @var OutputItemInterface[]|array
      */
-    private $phones;
+    private $phones = [];
 
     /**
      * PhonesOutputList constructor.
-     * @param OutputItemInterface[] $phones
+     * @param array|null $phones
      */
-    public function __construct(array $phones)
+    public function __construct(?array $phones = [])
     {
         $this->phones = $phones;
     }
@@ -27,5 +27,15 @@ class PhonesOutputList implements OutputListInterface, OutputItemInterface
     public function getPhones(): array
     {
         return $this->phones;
+    }
+
+    /**
+     * @param OutputItemInterface $outputItem
+     *
+     * @return void
+     */
+    public function addOutputItem(OutputItemInterface $outputItem): void
+    {
+        $this->phones[] = $outputItem;
     }
 }

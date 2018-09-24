@@ -35,11 +35,10 @@ class HateoasBuilder implements HateoasBuilderInterface
         ?string $rel = null,
         ?string $verb = null
     ): array {
-        $links = [];
-        $links['type'] = $verb;
-        $links['rel'] = $rel;
-        $links['href'] = $this->urlGenerator->generate($linkName, $params);
-
-        return $links;
+        return [
+            'type' => $verb,
+            'rel'  => $rel,
+            'href' => $this->urlGenerator->generate($linkName, $params),
+        ];
     }
 }

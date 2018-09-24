@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Application\APIs\Phones\All\Helpers\Interfaces;
-
-use App\Application\APIs\Interfaces\InputInterface;
-use App\Application\APIs\Interfaces\OutputListInterface;
+namespace App\Application\APIs\Interfaces;
 
 interface LoaderInterface
 {
