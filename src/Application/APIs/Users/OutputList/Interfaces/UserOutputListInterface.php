@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\APIs\Users\All\OutputList\Interfaces;
+namespace App\Application\APIs\Users\OutputList\Interfaces;
 
 use App\Application\APIs\Interfaces\OutputItemInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;

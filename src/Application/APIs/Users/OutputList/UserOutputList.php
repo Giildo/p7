@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Application\APIs\Users\All\OutputList;
+namespace App\Application\APIs\Users\OutputList;
 
 use App\Application\APIs\Interfaces\OutputItemInterface;
-use App\Application\APIs\Users\All\OutputList\Interfaces\UserOutputListInterface;
+use App\Application\APIs\Users\OutputList\Interfaces\UserOutputListInterface;
 use App\Domain\Models\User;
 
 class UserOutputList implements UserOutputListInterface, OutputItemInterface
