@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Application\APIs\Users\All\OutputItems;
+namespace App\Application\APIs\Users\OutputItems;
 
 use App\Application\APIs\Helpers\Hateoas\Link;
-use App\Application\APIs\Interfaces\OutputItemInterface;
+use App\Application\APIs\Users\OutputItems\Interfaces\OutputUsersItemInterface;
 use App\Domain\Models\Interfaces\ClientInterface;
 use App\Domain\Models\User;
 use Ramsey\Uuid\Uuid;
 
-class UserOutput implements OutputItemInterface
+class UserOutput implements OutputUsersItemInterface
 {
     /**
      * @var Uuid
@@ -98,7 +98,7 @@ class UserOutput implements OutputItemInterface
     /**
      * @return Link[]|array
      */
-    public function getLinks()
+    public function getLinks(): array
     {
         return $this->links;
     }
