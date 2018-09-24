@@ -10,7 +10,7 @@ interface ExceptionContentBuilderInterface
      * @param string $message
      * @param int $code
      *
-     * @return array
+     * @return ExceptionContent
      */
     public function build(string $message, int $code): ExceptionContent;
 }

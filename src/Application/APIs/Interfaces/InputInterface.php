@@ -13,9 +13,4 @@ interface InputInterface
      * @return int|null
      */
     public function getOffset(): ?int;
-
-    /**
-     * @return null|string
-     */
-    public function getCategory(): ?string;
 }

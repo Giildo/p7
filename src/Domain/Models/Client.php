@@ -3,7 +3,6 @@
 namespace App\Domain\Models;
 
 use App\Domain\Models\Interfaces\ClientInterface;
-use App\Domain\Models\Interfaces\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -11,10 +10,10 @@ use Ramsey\Uuid\Uuid;
  * Class User
  * @package App\Domain\Models
  *
- * @ORM\Table(name="p7_user")
+ * @ORM\Table(name="p7_client")
  * @ORM\Entity()
  */
-class User implements UserInterface
+class Client implements ClientInterface
 {
     /**
      * @var Uuid
@@ -48,29 +47,17 @@ class User implements UserInterface
     private $roles;
 
     /**
-     * @var ClientInterface
-     *
-     * @ORM\ManyToOne(targetEntity="App\Domain\Models\Client", cascade={"persist"})
-     */
-    private $client;
-
-    /**
-     * User constructor.
+     * Client constructor.
      * @param string $username
      * @param string $password
-     * @param array $roles
-     * @param Client $client
      */
     public function __construct(
         string $username,
-        string $password,
-        array $roles,
-        ClientInterface $client
+        string $password
     ) {
         $this->username = $username;
         $this->password = $password;
-        $this->roles = $roles;
-        $this->client = $client;
+        $this->roles = ['ROLE_CLIENT'];
     }
 
     /**
@@ -79,14 +66,6 @@ class User implements UserInterface
     public function getId(): Uuid
     {
         return $this->id;
-    }
-
-    /**
-     * @return ClientInterface
-     */
-    public function getClient(): ClientInterface
-    {
-        return $this->client;
     }
 
     /**

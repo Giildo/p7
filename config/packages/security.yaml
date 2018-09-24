@@ -3,10 +3,12 @@ security:
     providers:
         user_db:
             entity:
-                class: App\Domain\Models\User
+                class: App\Domain\Models\Client
                 property: username
 
     encoders:
+        App\Domain\Models\Client:
+            algorithm: bcrypt
         App\Domain\Models\User:
             algorithm: bcrypt
 
@@ -29,7 +31,7 @@ security:
             provider: user_db
             guard:
                 authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+                    - App\Application\APIs\Security\Authenticator\APIAuthenticator
         main:
             anonymous: true
 

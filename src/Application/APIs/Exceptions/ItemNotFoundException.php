@@ -11,6 +11,8 @@ class ItemNotFoundException extends Exception
     const PHONE_NOT_FOUND_WITH_THIS_BRAND = 3;
     const PHONE_NOT_FOUND_WITH_THIS_ID = 4;
 
+    const USER_NOT_FOUND = 10;
+
     public function __construct(int $code = 0)
     {
         parent::__construct($this->buildMessage($code), $code, null);
@@ -35,6 +37,10 @@ class ItemNotFoundException extends Exception
 
             case self::PHONE_NOT_FOUND_WITH_THIS_ID:
                 $message = 'Aucun portable n\'a été trouvé dans la base de données avec cet identifiant.';
+                break;
+
+            case self::USER_NOT_FOUND:
+                $message = 'Aucun utilisateur n\'a été trouvé dans la base de données.';
                 break;
         };
 

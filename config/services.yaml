@@ -31,3 +31,18 @@ services:
     App\Application\APIs\Listener\ExceptionListener:
         tags:
         - { name: kernel.event_listener, event: kernel.exception }
+
+    personal_api.event.token_expired:
+        class: App\Application\APIs\Security\Subscribers\TokenExpiredSubscriber
+        tags:
+            - { name: kernel.event_subscriber, event: personal_authentication.token_expired }
+
+    personal_api.event.token_invalid:
+        class: App\Application\APIs\Security\Subscribers\TokenInvalidSubscriber
+        tags:
+            - { name: kernel.event_subscriber, event: personal_authentication.token_invalid }
+
+    personal_api.event.no_token:
+        class: App\Application\APIs\Security\Subscribers\NoTokenSubscriber
+        tags:
+            - { name: kernel.event_subscriber, event: personal_authentication.no_token }

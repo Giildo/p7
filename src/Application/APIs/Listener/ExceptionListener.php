@@ -6,11 +6,10 @@ use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Exceptions\Interfaces\ExceptionContentBuilderInterface;
 use App\UI\Responders\Interfaces\OutputJSONResponderInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ExceptionListener
 {
-    const OK = 200;
-    const NO_CONTENT = 204;
     const NOT_FOUND = 404;
 
     /**
@@ -21,18 +20,25 @@ class ExceptionListener
      * @var ExceptionContentBuilderInterface
      */
     private $exceptionBuilder;
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
 
     /**
      * ExceptionListener constructor.
      * @param OutputJSONResponderInterface $JSONResponder
      * @param ExceptionContentBuilderInterface $exceptionBuilder
+     * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         OutputJSONResponderInterface $JSONResponder,
-        ExceptionContentBuilderInterface $exceptionBuilder
+        ExceptionContentBuilderInterface $exceptionBuilder,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->JSONResponder = $JSONResponder;
         $this->exceptionBuilder = $exceptionBuilder;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -40,18 +46,19 @@ class ExceptionListener
         $exception = $event->getException();
 
         if ($exception instanceof ItemNotFoundException) {
-            $content = $this->exceptionBuilder->build(
-                $exception->getMessage(),
-                $exception->getCode()
-            );
+                $content = $this->exceptionBuilder->build(
+                    $exception->getMessage(),
+                    $exception->getCode()
+                );
 
-            $response = $this->JSONResponder->response(
-                $content,
-                self::NOT_FOUND
-            );
+                $response = $this->JSONResponder->response(
+                    $content,
+                    self::NOT_FOUND
+                );
 
-            $event->setResponse($response);
-            return;
+                $event->setResponse($response);
+                return;
+
         }
     }
 }
