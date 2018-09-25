@@ -30,7 +30,7 @@ class ExceptionContentBuilder implements ExceptionContentBuilderInterface
     public function build(string $message, int $code): ExceptionContent
     {
         $content = [
-            'id'      => $code,
+            'code'    => $code,
             'message' => $message,
         ];
 

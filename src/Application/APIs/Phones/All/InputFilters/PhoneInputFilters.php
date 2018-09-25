@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\APIs\Users\All\InputItems;
+namespace App\Application\APIs\Phones\All\InputFilters;
 
-use App\Application\APIs\Users\All\InputItems\Interfaces\InputUserInterface;
+use App\Application\APIs\Phones\All\InputFilters\Interfaces\InputFiltersPhoneInterface;
 
-class UserInput implements InputUserInterface
+class PhoneInputFilters implements InputFiltersPhoneInterface
 {
     /**
      * @var int|null
@@ -15,24 +15,24 @@ class UserInput implements InputUserInterface
      */
     private $offset;
     /**
-     * @var string
+     * @var string|null
      */
-    private $clientUsername;
+    private $brand;
 
     /**
-     * UserInput constructor.
-     * @param string $clientUsername
+     * PhoneInputFilters constructor.
      * @param int|null $limit
      * @param int|null $offset
+     * @param null|string $brand
      */
     public function __construct(
-        string $clientUsername,
         ?int $limit = 0,
-        ?int $offset = 0
+        ?int $offset = 0,
+        ?string $brand = ''
     ) {
-        $this->clientUsername = $clientUsername;
         $this->limit = $limit;
         $this->offset = $offset;
+        $this->brand = $brand;
     }
 
     /**
@@ -52,10 +52,10 @@ class UserInput implements InputUserInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getClientUsername(): string
+    public function getCategory(): ?string
     {
-        return $this->clientUsername;
+        return $this->brand;
     }
 }

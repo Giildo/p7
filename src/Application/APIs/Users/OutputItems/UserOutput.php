@@ -5,7 +5,7 @@ namespace App\Application\APIs\Users\OutputItems;
 use App\Application\APIs\Helpers\Hateoas\Link;
 use App\Application\APIs\Users\OutputItems\Interfaces\OutputUsersItemInterface;
 use App\Domain\Models\Interfaces\ClientInterface;
-use App\Domain\Models\User;
+use App\Domain\Models\Interfaces\UserInterface;
 use Ramsey\Uuid\Uuid;
 
 class UserOutput implements OutputUsersItemInterface
@@ -42,10 +42,10 @@ class UserOutput implements OutputUsersItemInterface
 
     /**
      * UserOutput constructor.
-     * @param User $user
+     * @param UserInterface $user
      * @param Link[]|array $links
      */
-    public function __construct(User $user, $links)
+    public function __construct(UserInterface $user, $links)
     {
         $this->id = $user->getId();
         $this->username = $user->getUsername();

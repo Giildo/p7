@@ -4,11 +4,11 @@ namespace App\Application\APIs\Users\Show\Loaders;
 
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
-use App\Application\APIs\Interfaces\InputInterface;
+use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;
 use App\Application\APIs\Users\OutputItems\UserOutput;
 use App\Application\APIs\Users\OutputList\UserOutputList;
-use App\Application\APIs\Users\Show\InputItems\Interfaces\OneUserInputInterface;
+use App\Application\APIs\Users\Show\InputFilters\Interfaces\OneUserInputFiltersInterface;
 use App\Application\APIs\Users\Show\Loaders\Interfaces\LoaderOneUserInterface;
 use App\Domain\Repositories\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -38,13 +38,13 @@ class Loader implements LoaderOneUserInterface
     }
 
     /**
-     * @param OneUserInputInterface|InputInterface|null $inputFilters
+     * @param OneUserInputFiltersInterface|InputFiltersInterface|null $inputFilters
      *
      * @return OutputListInterface|null
      *
      * @throws ItemNotFoundException
      */
-    public function load(?InputInterface $inputFilters = null): ?OutputListInterface
+    public function load(?InputFiltersInterface $inputFilters = null): ?OutputListInterface
     {
         try {
             $user = $this->userRepository->loadOneUserByClientUsernameAndUserId(

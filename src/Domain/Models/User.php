@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
  * @package App\Domain\Models
  *
  * @ORM\Table(name="p7_user")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Domain\Repositories\UserRepository")
  */
 class User implements UserInterface
 {
@@ -29,7 +29,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $username;
 

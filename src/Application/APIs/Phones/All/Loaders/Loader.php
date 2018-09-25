@@ -4,9 +4,9 @@ namespace App\Application\APIs\Phones\All\Loaders;
 
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
-use App\Application\APIs\Interfaces\InputInterface;
+use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;
-use App\Application\APIs\Phones\All\InputItems\Interfaces\InputPhoneInterface;
+use App\Application\APIs\Phones\All\InputFilters\Interfaces\InputFiltersPhoneInterface;
 use App\Application\APIs\Phones\All\Loaders\Interfaces\LoaderPhoneInterface;
 use App\Application\APIs\Phones\All\OutputItems\PhoneOutput;
 use App\Application\APIs\Phones\All\OutputList\PhonesOutputList;
@@ -37,13 +37,13 @@ class Loader implements LoaderPhoneInterface
     }
 
     /**
-     * @param InputPhoneInterface|InputInterface|null $inputFilters
+     * @param InputFiltersPhoneInterface|InputFiltersInterface|null $inputFilters
      *
      * @return OutputListInterface|null
      *
      * @throws ItemNotFoundException
      */
-    public function load(?InputInterface $inputFilters = null): ?OutputListInterface
+    public function load(?InputFiltersInterface $inputFilters = null): ?OutputListInterface
     {
         $phones = $this->phoneRepository->loadPhonesWithFilters($inputFilters);
 

@@ -8,9 +8,9 @@ use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 interface UserInterface extends SecurityUserInterface
 {
     /**
-     * @return Uuid
+     * @return Uuid|null
      */
-    public function getId(): Uuid;
+    public function getId(): ?Uuid;
 
     /**
      * @return ClientInterface

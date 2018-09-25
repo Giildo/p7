@@ -2,10 +2,13 @@
 
 namespace App\Domain\Repositories;
 
+use App\Domain\Models\Interfaces\UserInterface;
 use App\Domain\Models\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 class UserRepository extends ServiceEntityRepository
 {
@@ -48,5 +51,19 @@ class UserRepository extends ServiceEntityRepository
             ->addSelect('client')
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param UserInterface $user
+     *
+     * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function saveUser(UserInterface $user): void
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 }

@@ -5,12 +5,14 @@ namespace App\Application\APIs\Listener;
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Exceptions\Interfaces\ExceptionContentBuilderInterface;
 use App\UI\Responders\Interfaces\OutputJSONResponderInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ExceptionListener
 {
     const NOT_FOUND = 404;
+    const CONFLICT = 409;
 
     /**
      * @var OutputJSONResponderInterface
@@ -46,19 +48,27 @@ class ExceptionListener
         $exception = $event->getException();
 
         if ($exception instanceof ItemNotFoundException) {
-                $content = $this->exceptionBuilder->build(
-                    $exception->getMessage(),
-                    $exception->getCode()
-                );
-
-                $response = $this->JSONResponder->response(
-                    $content,
+            $event->setResponse(
+                $this->JSONResponder->response(
+                    $this->exceptionBuilder->build(
+                        $exception->getMessage(),
+                        self::NOT_FOUND
+                    ),
                     self::NOT_FOUND
-                );
+                )
+            );
+        }
 
-                $event->setResponse($response);
-                return;
-
+        if ($exception instanceof UniqueConstraintViolationException) {
+            $event->setResponse(
+                $this->JSONResponder->response(
+                    $this->exceptionBuilder->build(
+                        'Le nom d\'utilisateur existe déjà.',
+                        self::CONFLICT
+                    ),
+                    self::CONFLICT
+                )
+            );
         }
     }
 }
