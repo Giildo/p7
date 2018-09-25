@@ -2,9 +2,9 @@
 
 namespace App\Application\APIs\Users\All\Handlers;
 
-use App\Application\APIs\Interfaces\InputInterface;
+use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Users\All\Handlers\Interfaces\HandlerUsersInterface;
-use App\Application\APIs\Users\All\InputItems\UserInput;
+use App\Application\APIs\Users\All\InputFilters\UserInputFilters;
 use Symfony\Component\HttpFoundation\Request;
 
 class Handler implements HandlerUsersInterface
@@ -12,11 +12,11 @@ class Handler implements HandlerUsersInterface
     /**
      * @param Request $request
      *
-     * @return InputInterface
+     * @return InputFiltersInterface
      */
-    public function handle(Request $request): InputInterface
+    public function handle(Request $request): InputFiltersInterface
     {
-        return new UserInput(
+        return new UserInputFilters(
             $request->attributes->get('client'),
             ($request->query->get('limit'))? : null,
             ($request->query->get('offset'))? : null

@@ -2,7 +2,8 @@
 
 namespace App\Domain\Repositories;
 
-use App\Application\APIs\Interfaces\InputInterface;
+use App\Application\APIs\Interfaces\InputFiltersInterface;
+use App\Application\APIs\Phones\All\InputFilters\Interfaces\InputFiltersPhoneInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use App\Domain\Models\Phone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -17,11 +18,11 @@ class PhoneRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param InputInterface|null $inputFilters
+     * @param InputFiltersPhoneInterface|InputFiltersInterface|null $inputFilters
      *
      * @return array
      */
-    public function loadPhonesWithFilters(?InputInterface $inputFilters = null): array
+    public function loadPhonesWithFilters(?InputFiltersInterface $inputFilters = null): array
     {
         $qb = $this->createQueryBuilder('phone')
                    ->select('phone.id', 'phone.brand', 'phone.os', 'phone.name');

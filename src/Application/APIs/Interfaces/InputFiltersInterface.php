@@ -2,7 +2,7 @@
 
 namespace App\Application\APIs\Interfaces;
 
-interface InputInterface
+interface InputFiltersInterface
 {
     /**
      * @return int|null

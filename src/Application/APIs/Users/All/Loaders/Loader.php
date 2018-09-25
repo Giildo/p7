@@ -4,9 +4,9 @@ namespace App\Application\APIs\Users\All\Loaders;
 
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
-use App\Application\APIs\Interfaces\InputInterface;
+use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;
-use App\Application\APIs\Users\All\InputItems\Interfaces\InputUserInterface;
+use App\Application\APIs\Users\All\InputFilters\Interfaces\InputFiltersUserInterface;
 use App\Application\APIs\Users\All\Loaders\Interfaces\LoaderUserInterface;
 use App\Application\APIs\Users\OutputItems\UserOutput;
 use App\Application\APIs\Users\OutputList\UserOutputList;
@@ -38,13 +38,13 @@ class Loader implements LoaderUserInterface
     }
 
     /**
-     * @param InputUserInterface|InputInterface|null $inputFilters
+     * @param InputFiltersUserInterface|InputFiltersInterface|null $inputFilters
      *
      * @return OutputListInterface|null
      *
      * @throws ItemNotFoundException
      */
-    public function load(?InputInterface $inputFilters = null): ?OutputListInterface
+    public function load(?InputFiltersInterface $inputFilters = null): ?OutputListInterface
     {
         $users = $this->userRepository->loadUserByClientUsername($inputFilters->getClientUsername());
 

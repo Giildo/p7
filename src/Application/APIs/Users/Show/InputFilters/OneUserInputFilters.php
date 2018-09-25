@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\APIs\Users\Show\InputItems;
+namespace App\Application\APIs\Users\Show\InputFilters;
 
-use App\Application\APIs\Users\Show\InputItems\Interfaces\OneUserInputInterface;
+use App\Application\APIs\Users\Show\InputFilters\Interfaces\OneUserInputFiltersInterface;
 
-class UserInput implements OneUserInputInterface
+class OneUserInputFilters implements OneUserInputFiltersInterface
 {
     /**
      * @var string
@@ -17,7 +17,7 @@ class UserInput implements OneUserInputInterface
     private $username;
 
     /**
-     * UserInput constructor.
+     * OneUserInputFilters constructor.
      * @param string $id
      * @param string $username
      */
