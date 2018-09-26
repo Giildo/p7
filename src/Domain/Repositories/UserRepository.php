@@ -66,4 +66,18 @@ class UserRepository extends ServiceEntityRepository
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    /**
+     * @param UserInterface $user
+     *
+     * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function deleteUser(UserInterface $user): void
+    {
+        $this->_em->remove($user);
+        $this->_em->flush();
+    }
 }

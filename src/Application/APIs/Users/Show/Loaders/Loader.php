@@ -62,12 +62,23 @@ class Loader implements LoaderOneUserInterface
         return new UserOutputList([
             new UserOutput(
                 $user,
-                $this->hateoasBuilder->build(
-                    'Users_list',
-                    ['client' => $inputFilters->getUsername()],
-                    'list',
-                    'GET'
-                )
+                [
+                    $this->hateoasBuilder->build(
+                        'User_delete',
+                        [
+                            'client' => $inputFilters->getUsername(),
+                            'id' => $user->getId()
+                        ],
+                        'self',
+                        'DELETE'
+                    ),
+                    $this->hateoasBuilder->build(
+                        'Users_list',
+                        ['client' => $inputFilters->getUsername()],
+                        'list',
+                        'GET'
+                    )
+                ]
             ),
         ]);
     }
