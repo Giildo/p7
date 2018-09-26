@@ -57,15 +57,26 @@ class Loader implements LoaderUserInterface
             $outputList->addOutputItem(
                 new UserOutput(
                     $user,
-                    $this->hateoasBuilder->build(
-                        'User_show',
-                        [
-                            'client' => $inputFilters->getClientUsername(),
-                            'id'     => $user->getId(),
-                        ],
-                        'self',
-                        'GET'
-                    )
+                    [
+                        $this->hateoasBuilder->build(
+                            'User_show',
+                            [
+                                'client' => $inputFilters->getClientUsername(),
+                                'id'     => $user->getId(),
+                            ],
+                            'self',
+                            'GET'
+                        ),
+                        $this->hateoasBuilder->build(
+                            'User_delete',
+                            [
+                                'client' => $inputFilters->getClientUsername(),
+                                'id'     => $user->getId(),
+                            ],
+                            'self',
+                            'DELETE'
+                        )
+                    ]
                 )
             );
         }
