@@ -57,7 +57,7 @@ class ListUsersAction
      * @Route(
      *     path="/clients/{client}/users",
      *     name="Users_list",
-     *     requirements={"client": "\w+"},
+     *     requirements={"client": "[a-zA-Z0-9-]+"},
      *     methods={"GET"}
      * )
      *

@@ -48,8 +48,8 @@ class Loader implements LoaderOneUserInterface
     {
         try {
             $user = $this->userRepository->loadOneUserByClientUsernameAndUserId(
-                $inputFilters->getId(),
-                $inputFilters->getUsername()
+                $inputFilters->getUserId(),
+                $inputFilters->getClientId()
             );
         } catch (NonUniqueResultException $e) {
             throw new ItemNotFoundException(ItemNotFoundException::USER_NOT_FOUND);
@@ -66,7 +66,7 @@ class Loader implements LoaderOneUserInterface
                     $this->hateoasBuilder->build(
                         'User_delete',
                         [
-                            'client' => $inputFilters->getUsername(),
+                            'client' => $inputFilters->getClientId(),
                             'id' => $user->getId()
                         ],
                         'self',
@@ -74,7 +74,7 @@ class Loader implements LoaderOneUserInterface
                     ),
                     $this->hateoasBuilder->build(
                         'Users_list',
-                        ['client' => $inputFilters->getUsername()],
+                        ['client' => $inputFilters->getClientId()],
                         'list',
                         'GET'
                     )

@@ -18,36 +18,36 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $username
+     * @param string $id
      *
      * @return User[]|array
      */
-    public function loadUserByClientUsername(string $username): array
+    public function loadUsersByClientId(string $id): array
     {
         return $this->createQueryBuilder('user')
             ->innerJoin('user.client', 'client')
-            ->where('client.username = :username')
-            ->setParameter('username', $username)
+            ->where('client.id = :clientId')
+            ->setParameter('clientId', $id)
             ->addSelect('client')
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @param string $id
-     * @param string $username
+     * @param string $userId
+     * @param string $clientId
      *
      * @return User|null
      *
      * @throws NonUniqueResultException
      */
-    public function loadOneUserByClientUsernameAndUserId(string $id, string $username): ?User
+    public function loadOneUserByClientUsernameAndUserId(string $userId, string $clientId): ?User
     {
         return $this->createQueryBuilder('user')
             ->innerJoin('user.client', 'client')
-            ->where('client.username = :username')
-            ->andWhere('user.id = :id')
-            ->setParameters(['id' => $id, 'username' => $username])
+            ->where('client.id = :clientId')
+            ->andWhere('user.id = :userId')
+            ->setParameters(['userId' => $userId, 'clientId' => $clientId])
             ->addSelect('client')
             ->getQuery()
             ->getOneOrNullResult();

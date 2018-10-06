@@ -8,6 +8,7 @@ use App\Application\APIs\Users\Create\InputItems\Interfaces\UserInputItemInterfa
 use App\Domain\Models\Interfaces\ClientInterface;
 use App\Domain\Models\Interfaces\UserInterface;
 use App\Domain\Models\User;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserBuilder implements UserBuilderInterface
 {
@@ -15,6 +16,19 @@ class UserBuilder implements UserBuilderInterface
      * @var UserInterface
      */
     private $user;
+    /**
+     * @var EncoderFactoryInterface
+     */
+    private $encoderFactory;
+
+    /**
+     * UserBuilder constructor.
+     * @param EncoderFactoryInterface $encoderFactory
+     */
+    public function __construct(EncoderFactoryInterface $encoderFactory)
+    {
+        $this->encoderFactory = $encoderFactory;
+    }
 
     /**
      * @param UserInputItemInterface|InputItemInterface $inputItem
@@ -26,7 +40,7 @@ class UserBuilder implements UserBuilderInterface
     {
         $this->user = new User(
             $inputItem->getUsername(),
-            $inputItem->getPassword(),
+            $this->encoderFactory->getEncoder(User::class)->encodePassword($inputItem->getPassword(), ''),
             $inputItem->getRoles(),
             $client
         );

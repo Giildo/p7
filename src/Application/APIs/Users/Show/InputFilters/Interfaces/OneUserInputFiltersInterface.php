@@ -9,10 +9,10 @@ interface OneUserInputFiltersInterface extends InputFiltersInterface
     /**
      * @return string
      */
-    public function getId(): string;
+    public function getUserId(): string;
 
     /**
      * @return string
      */
-    public function getUsername(): string;
+    public function getClientId(): string;
 }
