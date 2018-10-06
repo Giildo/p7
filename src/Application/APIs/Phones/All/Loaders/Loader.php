@@ -66,7 +66,7 @@ class Loader implements LoaderPhoneInterface
         $outputItem = new PhonesOutputList();
 
         foreach ($phones as $phone) {
-            $outputItem->addOutputItem(
+            $outputItem->add(
                 new PhoneOutput(
                     $phone,
                     $this->hateoasBuilder->build('Phone_show', ['id' => $phone['id']], 'self', 'GET')

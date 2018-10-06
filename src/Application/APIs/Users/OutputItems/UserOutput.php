@@ -2,15 +2,20 @@
 
 namespace App\Application\APIs\Users\OutputItems;
 
-use App\Application\APIs\Helpers\Hateoas\Link;
 use App\Application\APIs\Users\OutputItems\Interfaces\OutputUsersItemInterface;
 use App\Domain\Models\Interfaces\ClientInterface;
 use App\Domain\Models\Interfaces\UserInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
+use Swagger\Annotations as SWG;
 
 class UserOutput implements OutputUsersItemInterface
 {
     /**
+     * @SWG\Property(
+     *     type="string"
+     * )
+     *
      * @var Uuid
      */
     private $id;
@@ -26,24 +31,26 @@ class UserOutput implements OutputUsersItemInterface
     private $password;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $roles;
 
     /**
+     * @SWG\Property(ref=@Model(type=App\Domain\Models\Client::class))
+     *
      * @var ClientInterface
      */
     private $client;
 
     /**
-     * @var Link[]|array
+     * @var string[]
      */
     private $links;
 
     /**
      * UserOutput constructor.
      * @param UserInterface $user
-     * @param Link[]|array $links
+     * @param string[] $links
      */
     public function __construct(UserInterface $user, $links)
     {
@@ -80,7 +87,7 @@ class UserOutput implements OutputUsersItemInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array
     {
@@ -96,7 +103,7 @@ class UserOutput implements OutputUsersItemInterface
     }
 
     /**
-     * @return Link[]|array
+     * @return string[]
      */
     public function getLinks(): array
     {

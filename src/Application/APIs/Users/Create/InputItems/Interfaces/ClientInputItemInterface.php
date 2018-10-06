@@ -12,16 +12,16 @@ interface ClientInputItemInterface extends InputItemInterface
     public function getId(): string;
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getRoles();
+    public function getRoles(): array;
 
     /**
      * @return string The password
      */
-    public function getPassword();
+    public function getPassword(): string;
     /**
      * @return string The username
      */
-    public function getUsername();
+    public function getUsername(): string;
 }

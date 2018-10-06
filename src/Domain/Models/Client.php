@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Models\Interfaces\ClientInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Swagger\Annotations as SWG;
 
 /**
  * Class User
@@ -16,6 +17,10 @@ use Ramsey\Uuid\Uuid;
 class Client implements ClientInterface
 {
     /**
+     * @SWG\Property(
+     *     type="string"
+     * )
+     *
      * @var Uuid
      *
      * @ORM\Id()
@@ -40,7 +45,12 @@ class Client implements ClientInterface
     private $password;
 
     /**
-     * @var array
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(type="string")
+     * )
+     *
+     * @var string[]
      *
      * @ORM\Column(type="array")
      */
@@ -82,9 +92,9 @@ class Client implements ClientInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return (Role|string)[] The user roles
+     * @return string[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }

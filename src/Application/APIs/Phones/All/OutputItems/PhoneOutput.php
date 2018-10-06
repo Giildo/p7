@@ -2,13 +2,17 @@
 
 namespace App\Application\APIs\Phones\All\OutputItems;
 
-use App\Application\APIs\Helpers\Hateoas\Link;
 use App\Application\APIs\Interfaces\OutputItemInterface;
 use Ramsey\Uuid\Uuid;
+use Swagger\Annotations as SWG;
 
 class PhoneOutput implements OutputItemInterface
 {
     /**
+     * @SWG\Property(
+     *     type="string"
+     * )
+     *
      * @var Uuid
      */
     private $id;
@@ -29,7 +33,7 @@ class PhoneOutput implements OutputItemInterface
     private $name;
 
     /**
-     * @var Link[]|array
+     * @var string[]
      */
     private $links;
 
@@ -37,7 +41,7 @@ class PhoneOutput implements OutputItemInterface
      * PhoneOutput constructor.
      *
      * @param array $phone
-     * @param Link[]|array $links
+     * @param string[]|array $links
      */
     public function __construct(
         array $phone,
@@ -83,7 +87,7 @@ class PhoneOutput implements OutputItemInterface
     }
 
     /**
-     * @return Link[]|array
+     * @return string[]
      */
     public function getLinks(): array
     {
