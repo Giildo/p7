@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Models\Interfaces\BrandInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -28,9 +29,9 @@ class Phone implements PhoneInterface
     private $id;
 
     /**
-     * @var string
+     * @var BrandInterface
      *
-     * @ORM\Column(type="string", length=20)
+     * @ORM\ManyToOne(targetEntity="App\Domain\Models\Brand", cascade={"persist"})
      */
     private $brand;
 
@@ -173,7 +174,7 @@ class Phone implements PhoneInterface
 
     /**
      * Phone constructor.
-     * @param string $brand
+     * @param BrandInterface $brand
      * @param string $os
      * @param int $ram
      * @param int $battery
@@ -194,7 +195,7 @@ class Phone implements PhoneInterface
      * @param int $thickness
      */
     public function __construct(
-        string $brand,
+        BrandInterface $brand,
         string $os,
         int $ram,
         int $battery,
@@ -245,9 +246,9 @@ class Phone implements PhoneInterface
     }
 
     /**
-     * @return string
+     * @return BrandInterface
      */
-    public function getBrand(): string
+    public function getBrand(): BrandInterface
     {
         return $this->brand;
     }
