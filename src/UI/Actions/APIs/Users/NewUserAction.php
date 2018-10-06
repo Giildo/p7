@@ -5,7 +5,10 @@ namespace App\UI\Actions\APIs\Users;
 use App\Application\APIs\Users\Create\Handlers\Interfaces\NewUserHandlerInterface;
 use App\Application\APIs\Users\Create\Saver\Interfaces\UserSaverInterface;
 use App\UI\Responders\Interfaces\OutputJSONResponderInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,12 +44,40 @@ class NewUserAction
     }
 
     /**
+     * Adds one user to a client.
+     *
      * @Route(
-     *     path="/{client}/user/new",
+     *     path="/clients/{client}/users",
      *     name="User_new",
      *     requirements={"client": "\w+"},
      *     methods={"POST"}
      * )
+     *
+     * @SWG\Response(
+     *     response="201",
+     *     description="The new user is created.",
+     *     @SWG\Schema(ref=@Model(type=App\Application\APIs\Users\OutputItems\UserOutput::class))
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="No user found in the database, please check your input parameters."
+     * )
+     * @SWG\Parameter(
+     *     name="client",
+     *     in="path",
+     *     type="string",
+     *     description="The client ID."
+     * )
+     * @SWG\Parameter(
+     *     name="user",
+     *     in="body",
+     *     required=true,
+     *     @SWG\Schema(
+     *          ref=@Model(type=App\Application\APIs\Users\Create\InputItems\UserInputItem::class)
+     *     )
+     * )
+     * @SWG\Tag(name="User")
+     * @Security(name="Bearer")
      *
      * @param Request $request
      *

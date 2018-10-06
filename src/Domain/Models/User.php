@@ -5,7 +5,9 @@ namespace App\Domain\Models;
 use App\Domain\Models\Interfaces\ClientInterface;
 use App\Domain\Models\Interfaces\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
+use Swagger\Annotations as SWG;
 
 /**
  * Class User
@@ -17,6 +19,10 @@ use Ramsey\Uuid\Uuid;
 class User implements UserInterface
 {
     /**
+     * @SWG\Property(
+     *     type="string"
+     * )
+     *
      * @var Uuid
      *
      * @ORM\Id()
@@ -41,6 +47,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(type="string")
+     * )
+     *
      * @var array
      *
      * @ORM\Column(type="array")
@@ -48,6 +59,11 @@ class User implements UserInterface
     private $roles;
 
     /**
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Domain\Models\Client::class))
+     * )
+     *
      * @var ClientInterface
      *
      * @ORM\ManyToOne(targetEntity="App\Domain\Models\Client", cascade={"persist"})

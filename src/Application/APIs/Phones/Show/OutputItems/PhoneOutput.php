@@ -6,11 +6,17 @@ use App\Application\APIs\Helpers\Hateoas\Link;
 use App\Application\APIs\Interfaces\OutputItemInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use Doctrine\Common\Collections\Collection;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
+use Swagger\Annotations as SWG;
 
 class PhoneOutput implements PhoneInterface, OutputItemInterface
 {
     /**
+     * @SWG\Property(
+     *     type="string"
+     * )
+     *
      * @var Uuid
      */
     private $id;
@@ -26,6 +32,11 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     private $os;
 
     /**
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Domain\Models\Memory::class))
+     * )
+     *
      * @var Collection
      */
     private $memories;
@@ -116,7 +127,7 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     private $thickness;
 
     /**
-     * @var Link[]|array
+     * @var string[]
      */
     private $links;
 
@@ -323,7 +334,7 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     }
 
     /**
-     * @return Link[]|array
+     * @return string[]
      */
     public function getLinks(): array
     {

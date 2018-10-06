@@ -54,7 +54,7 @@ class Loader implements LoaderUserInterface
 
         $outputList = new UserOutputList();
         foreach ($users as $user) {
-            $outputList->addOutputItem(
+            $outputList->add(
                 new UserOutput(
                     $user,
                     [

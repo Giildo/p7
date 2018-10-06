@@ -9,5 +9,5 @@ interface OutputListInterface
      *
      * @return void
      */
-    public function addOutputItem(OutputItemInterface $outputItem): void;
+    public function add(OutputItemInterface $outputItem): void;
 }

@@ -19,7 +19,7 @@ class ClientInputItem implements ClientInputItemInterface
      */
     private $password;
     /**
-     * @var array
+     * @var string[]
      */
     private $roles;
 
@@ -51,9 +51,9 @@ class ClientInputItem implements ClientInputItemInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -61,7 +61,7 @@ class ClientInputItem implements ClientInputItemInterface
     /**
      * @return string The password
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -69,7 +69,7 @@ class ClientInputItem implements ClientInputItemInterface
     /**
      * @return string The username
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }

@@ -16,7 +16,7 @@ class UserInputItem implements UserInputItemInterface
      */
     private $password;
     /**
-     * @var array
+     * @var string[]
      */
     private $roles;
     /**
@@ -61,7 +61,7 @@ class UserInputItem implements UserInputItemInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array
     {

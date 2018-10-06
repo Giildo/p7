@@ -17,7 +17,7 @@ interface UserInputItemInterface extends InputItemInterface
     public function getPassword(): string;
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array;
 
