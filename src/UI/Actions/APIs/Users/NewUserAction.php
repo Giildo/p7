@@ -49,7 +49,7 @@ class NewUserAction
      * @Route(
      *     path="/clients/{client}/users",
      *     name="User_new",
-     *     requirements={"client": "\w+"},
+     *     requirements={"client": "[a-zA-Z0-9-]+"},
      *     methods={"POST"}
      * )
      *

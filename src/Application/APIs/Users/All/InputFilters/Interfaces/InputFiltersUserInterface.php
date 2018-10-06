@@ -9,5 +9,5 @@ interface InputFiltersUserInterface extends InputFiltersInterface
     /**
      * @return string
      */
-    public function getClientUsername(): string;
+    public function getClientId(): string;
 }

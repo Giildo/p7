@@ -50,7 +50,7 @@ class ShowUserAction
      * @Route(
      *     path="/clients/{client}/users/{id}",
      *     name="User_show",
-     *     requirements={"client": "\w+", "id": "[a-zA-Z0-9-]+"},
+     *     requirements={"client": "[a-zA-Z0-9-]+", "id": "[a-zA-Z0-9-]+"},
      *     methods={"GET"}
      * )
      *

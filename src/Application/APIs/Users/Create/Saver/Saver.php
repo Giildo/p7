@@ -74,7 +74,7 @@ class Saver implements UserSaverInterface
                 $this->hateoasBuilder->build(
                     'User_show',
                     [
-                        'client' => $inputItem->getClient()->getUsername(),
+                        'client' => $inputItem->getClient()->getId(),
                         'id'     => $user->getId()
                     ],
                     'self',
@@ -83,7 +83,7 @@ class Saver implements UserSaverInterface
                 $this->hateoasBuilder->build(
                     'User_delete',
                     [
-                        'client' => $inputItem->getClient()->getUsername(),
+                        'client' => $inputItem->getClient()->getId(),
                         'id'     => $user->getId()
                     ],
                     'self',
@@ -91,7 +91,7 @@ class Saver implements UserSaverInterface
                 ),
                 $this->hateoasBuilder->build(
                     'Users_list',
-                    ['client' => $inputItem->getClient()->getUsername()],
+                    ['client' => $inputItem->getClient()->getId()],
                     'list',
                     'GET'
                 )

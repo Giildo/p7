@@ -46,7 +46,7 @@ class Loader implements LoaderUserInterface
      */
     public function load(?InputFiltersInterface $inputFilters = null): ?OutputListInterface
     {
-        $users = $this->userRepository->loadUserByClientUsername($inputFilters->getClientUsername());
+        $users = $this->userRepository->loadUsersByClientId($inputFilters->getClientId());
 
         if (empty($users)) {
             throw new ItemNotFoundException(ItemNotFoundException::USER_NOT_FOUND);
@@ -61,7 +61,7 @@ class Loader implements LoaderUserInterface
                         $this->hateoasBuilder->build(
                             'User_show',
                             [
-                                'client' => $inputFilters->getClientUsername(),
+                                'client' => $inputFilters->getClientId(),
                                 'id'     => $user->getId(),
                             ],
                             'self',
@@ -70,7 +70,7 @@ class Loader implements LoaderUserInterface
                         $this->hateoasBuilder->build(
                             'User_delete',
                             [
-                                'client' => $inputFilters->getClientUsername(),
+                                'client' => $inputFilters->getClientId(),
                                 'id'     => $user->getId(),
                             ],
                             'self',
