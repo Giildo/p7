@@ -4,6 +4,7 @@ namespace App\Application\APIs\Phones\All\OutputItems;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
 use App\Application\APIs\Interfaces\OutputItemInterface;
+use App\Domain\Models\Interfaces\PhoneInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
@@ -47,17 +48,17 @@ class PhoneOutput implements OutputItemInterface
     /**
      * PhoneOutput constructor.
      *
-     * @param array $phone
+     * @param PhoneInterface $phone
      * @param LinkInterface $links
      */
     public function __construct(
-        array $phone,
+        PhoneInterface $phone,
         LinkInterface $links
     ) {
-        $this->id = $phone['id'];
-        $this->brand = $phone['brand'];
-        $this->os = $phone['os'];
-        $this->name = $phone['name'];
+        $this->id = $phone->getId();
+        $this->brand = $phone->getBrand()->getName();
+        $this->os = $phone->getOs();
+        $this->name = $phone->getName();
         $this->links = $links;
     }
 
