@@ -2,6 +2,7 @@
 
 namespace App\Domain\DataFixtures;
 
+use App\Domain\Models\Brand;
 use App\Domain\Models\Memory;
 use App\Domain\Models\Phone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,18 +19,28 @@ class PhoneFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $memories = [
-            '64' => new Memory(64),
+            '64'  => new Memory(64),
             '128' => New Memory(128),
             '256' => New Memory(256),
             '512' => New Memory(512),
         ];
-
         foreach ($memories as $memory) {
             $manager->persist($memory);
         }
 
+        $apple = new Brand('Apple');
+        $manager->persist($apple);
+
+        $samsung = new Brand('Samsung');
+        $manager->persist($samsung);
+
+        $huawei = new Brand('Huawei');
+        $manager->persist($huawei);
+
+        $manager->flush();
+
         $s9 = new Phone(
-            'Samsung',
+            $samsung,
             'Android 8.0',
             4,
             3000,
@@ -54,9 +65,10 @@ class PhoneFixtures extends Fixture
         $s9->getMemories()->add($memories['256']);
 
         $manager->persist($s9);
+        $manager->flush();
 
         $note9 = new Phone(
-            'Samsung',
+            $samsung,
             'Android 8.1',
             6,
             4000,
@@ -82,7 +94,7 @@ class PhoneFixtures extends Fixture
         $manager->persist($note9);
 
         $p20 = new Phone(
-            'Huawei',
+            $huawei,
             'Android 8.1',
             6,
             4000,
@@ -107,7 +119,7 @@ class PhoneFixtures extends Fixture
         $manager->persist($p20);
 
         $IPX = new Phone(
-            'Apple',
+            $apple,
             'iOS 11',
             3,
             2900,
@@ -133,7 +145,7 @@ class PhoneFixtures extends Fixture
         $manager->persist($IPX);
 
         $IP8 = new Phone(
-            'Apple',
+            $apple,
             'iOS 11',
             2,
             1960,

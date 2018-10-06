@@ -4,6 +4,7 @@ namespace App\Application\APIs\Phones\Show\OutputItems;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
 use App\Application\APIs\Interfaces\OutputItemInterface;
+use App\Domain\Models\Interfaces\BrandInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use Doctrine\Common\Collections\Collection;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -22,7 +23,12 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     private $id;
 
     /**
-     * @var string
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Domain\Models\Brand::class))
+     * )
+     *
+     * @var BrandInterface
      */
     private $brand;
 
@@ -147,7 +153,7 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
         LinkInterface $links
     ) {
         $this->id = $phone->getId();
-        $this->brand = $phone->getBrand();
+        $this->brand = $phone->getBrand()->getName();
         $this->os = $phone->getOs();
         $this->memories = $phone->getMemories();
         $this->ram = $phone->getRam();
@@ -179,9 +185,9 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     }
 
     /**
-     * @return string
+     * @return BrandInterface
      */
-    public function getBrand(): string
+    public function getBrand(): BrandInterface
     {
         return $this->brand;
     }

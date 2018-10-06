@@ -73,7 +73,7 @@ class Loader implements LoaderPhoneInterface
                     $this->hateoasBuilder->build(
                         LinkFactory::GET_SHOW,
                         'Phone_show',
-                        ['id' => $phone['id']]
+                        ['id' => $phone->getId()]
                     )
                 )
             );

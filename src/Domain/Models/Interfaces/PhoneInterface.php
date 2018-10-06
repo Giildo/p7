@@ -13,9 +13,9 @@ interface PhoneInterface
     public function getId(): Uuid;
 
     /**
-     * @return string
+     * @return BrandInterface
      */
-    public function getBrand(): string;
+    public function getBrand(): BrandInterface;
 
     /**
      * @return string
