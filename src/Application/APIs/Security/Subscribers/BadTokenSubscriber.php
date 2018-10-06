@@ -3,6 +3,7 @@
 namespace App\Application\APIs\Security\Subscribers;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
+use App\Application\APIs\Helpers\Hateoas\LinkFactory;
 use App\Application\APIs\Security\Output\TokenErrorOutput;
 use App\UI\Responders\Interfaces\OutputJSONResponderInterface;
 
@@ -44,10 +45,8 @@ class BadTokenSubscriber
             "code" => 401,
             "message" => static::MESSAGE,
             "links" => $this->hateoasBuilder->build(
-                'api_login_check',
-                [],
-                'self',
-                'POST'
+                LinkFactory::POST_SHOW,
+                'api_login_check'
             ),
         ]);
     }

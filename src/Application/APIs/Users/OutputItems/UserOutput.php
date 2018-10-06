@@ -2,6 +2,7 @@
 
 namespace App\Application\APIs\Users\OutputItems;
 
+use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
 use App\Application\APIs\Users\OutputItems\Interfaces\OutputUsersItemInterface;
 use App\Domain\Models\Interfaces\ClientInterface;
 use App\Domain\Models\Interfaces\UserInterface;
@@ -43,14 +44,19 @@ class UserOutput implements OutputUsersItemInterface
     private $client;
 
     /**
-     * @var string[]
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Helpers\Hateoas\Link::class))
+     * )
+     *
+     * @var LinkInterface[]
      */
     private $links;
 
     /**
      * UserOutput constructor.
      * @param UserInterface $user
-     * @param string[] $links
+     * @param LinkInterface[] $links
      */
     public function __construct(UserInterface $user, $links)
     {
@@ -103,7 +109,7 @@ class UserOutput implements OutputUsersItemInterface
     }
 
     /**
-     * @return string[]
+     * @return LinkInterface[]
      */
     public function getLinks(): array
     {

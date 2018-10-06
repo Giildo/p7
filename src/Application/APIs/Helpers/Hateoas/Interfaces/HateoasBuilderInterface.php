@@ -5,17 +5,15 @@ namespace App\Application\APIs\Helpers\Hateoas\Interfaces;
 interface HateoasBuilderInterface
 {
     /**
-     * @param null|string $linkName
+     * @param string $type
+     * @param string $linkName
      * @param array|null $params
-     * @param null|string $rel
-     * @param null|string $verb
      *
-     * @return array
+     * @return LinkInterface
      */
     public function build(
-        ?string $linkName = null,
-        ?array $params = [],
-        ?string $rel = null,
-        ?string $verb = null
-    ): array;
+        string $type,
+        string $linkName,
+        ?array $params = []
+    ): LinkInterface;
 }

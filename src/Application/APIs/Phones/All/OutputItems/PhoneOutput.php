@@ -2,7 +2,9 @@
 
 namespace App\Application\APIs\Phones\All\OutputItems;
 
+use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
 use App\Application\APIs\Interfaces\OutputItemInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
 
@@ -33,7 +35,12 @@ class PhoneOutput implements OutputItemInterface
     private $name;
 
     /**
-     * @var string[]
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Helpers\Hateoas\Link::class))
+     * )
+     *
+     * @var LinkInterface
      */
     private $links;
 
@@ -41,11 +48,11 @@ class PhoneOutput implements OutputItemInterface
      * PhoneOutput constructor.
      *
      * @param array $phone
-     * @param string[]|array $links
+     * @param LinkInterface $links
      */
     public function __construct(
         array $phone,
-        array $links
+        LinkInterface $links
     ) {
         $this->id = $phone['id'];
         $this->brand = $phone['brand'];
@@ -87,9 +94,9 @@ class PhoneOutput implements OutputItemInterface
     }
 
     /**
-     * @return string[]
+     * @return LinkInterface
      */
-    public function getLinks(): array
+    public function getLinks(): LinkInterface
     {
         return $this->links;
     }
