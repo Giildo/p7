@@ -3,6 +3,7 @@
 namespace App\Application\APIs\Helpers\Hateoas;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
+use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class HateoasBuilder implements HateoasBuilderInterface
@@ -22,23 +23,16 @@ class HateoasBuilder implements HateoasBuilderInterface
     }
 
     /**
-     * @param null|string $linkName
-     * @param array|null $params
-     * @param null|string $rel
-     * @param null|string $verb
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function build(
-        ?string $linkName = null,
-        ?array $params = [],
-        ?string $rel = null,
-        ?string $verb = null
-    ): array {
-        return [
-            'type' => $verb,
-            'rel'  => $rel,
-            'href' => $this->urlGenerator->generate($linkName, $params),
-        ];
+        string $type,
+        string $linkName,
+        ?array $params = []
+    ): LinkInterface {
+        return LinkFactory::create(
+            $type,
+            $this->urlGenerator->generate($linkName, $params)
+        );
     }
 }

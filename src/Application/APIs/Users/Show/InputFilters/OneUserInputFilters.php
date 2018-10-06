@@ -9,40 +9,40 @@ class OneUserInputFilters implements OneUserInputFiltersInterface
     /**
      * @var string
      */
-    private $id;
+    private $userId;
 
     /**
      * @var string
      */
-    private $username;
+    private $clientId;
 
     /**
      * OneUserInputFilters constructor.
-     * @param string $id
-     * @param string $username
+     * @param string $userId
+     * @param string $clientId
      */
     public function __construct(
-        string $id,
-        string $username
+        string $userId,
+        string $clientId
     ) {
-        $this->id = $id;
-        $this->username = $username;
+        $this->userId = $userId;
+        $this->clientId = $clientId;
     }
 
     /**
      * @return string
      */
-    public function getId(): string
+    public function getUserId(): string
     {
-        return $this->id;
+        return $this->userId;
     }
 
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getClientId(): string
     {
-        return $this->username;
+        return $this->clientId;
     }
 
     /**

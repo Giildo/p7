@@ -4,6 +4,7 @@ namespace App\Application\APIs\Users\Show\Loaders;
 
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
+use App\Application\APIs\Helpers\Hateoas\LinkFactory;
 use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;
 use App\Application\APIs\Users\OutputItems\UserOutput;
@@ -48,8 +49,8 @@ class Loader implements LoaderOneUserInterface
     {
         try {
             $user = $this->userRepository->loadOneUserByClientUsernameAndUserId(
-                $inputFilters->getId(),
-                $inputFilters->getUsername()
+                $inputFilters->getUserId(),
+                $inputFilters->getClientId()
             );
         } catch (NonUniqueResultException $e) {
             throw new ItemNotFoundException(ItemNotFoundException::USER_NOT_FOUND);
@@ -64,19 +65,17 @@ class Loader implements LoaderOneUserInterface
                 $user,
                 [
                     $this->hateoasBuilder->build(
+                        LinkFactory::DELETE_SHOW,
                         'User_delete',
                         [
-                            'client' => $inputFilters->getUsername(),
+                            'client' => $inputFilters->getClientId(),
                             'id' => $user->getId()
-                        ],
-                        'self',
-                        'DELETE'
+                        ]
                     ),
                     $this->hateoasBuilder->build(
+                        LinkFactory::GET_LIST,
                         'Users_list',
-                        ['client' => $inputFilters->getUsername()],
-                        'list',
-                        'GET'
+                        ['client' => $inputFilters->getClientId()]
                     )
                 ]
             ),

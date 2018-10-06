@@ -17,20 +17,20 @@ class UserInputFilters implements InputFiltersUserInterface
     /**
      * @var string
      */
-    private $clientUsername;
+    private $clientId;
 
     /**
      * OneUserInputFilters constructor.
-     * @param string $clientUsername
+     * @param string $clientId
      * @param int|null $limit
      * @param int|null $offset
      */
     public function __construct(
-        string $clientUsername,
+        string $clientId,
         ?int $limit = 0,
         ?int $offset = 0
     ) {
-        $this->clientUsername = $clientUsername;
+        $this->clientId = $clientId;
         $this->limit = $limit;
         $this->offset = $offset;
     }
@@ -54,8 +54,8 @@ class UserInputFilters implements InputFiltersUserInterface
     /**
      * @return string
      */
-    public function getClientUsername(): string
+    public function getClientId(): string
     {
-        return $this->clientUsername;
+        return $this->clientId;
     }
 }

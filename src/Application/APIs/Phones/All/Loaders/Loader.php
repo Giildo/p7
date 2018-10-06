@@ -4,6 +4,7 @@ namespace App\Application\APIs\Phones\All\Loaders;
 
 use App\Application\APIs\Exceptions\ItemNotFoundException;
 use App\Application\APIs\Helpers\Hateoas\Interfaces\HateoasBuilderInterface;
+use App\Application\APIs\Helpers\Hateoas\LinkFactory;
 use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Interfaces\OutputListInterface;
 use App\Application\APIs\Phones\All\InputFilters\Interfaces\InputFiltersPhoneInterface;
@@ -69,7 +70,11 @@ class Loader implements LoaderPhoneInterface
             $outputItem->add(
                 new PhoneOutput(
                     $phone,
-                    $this->hateoasBuilder->build('Phone_show', ['id' => $phone['id']], 'self', 'GET')
+                    $this->hateoasBuilder->build(
+                        LinkFactory::GET_SHOW,
+                        'Phone_show',
+                        ['id' => $phone['id']]
+                    )
                 )
             );
         }

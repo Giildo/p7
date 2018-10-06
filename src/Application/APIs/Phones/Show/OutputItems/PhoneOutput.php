@@ -2,7 +2,7 @@
 
 namespace App\Application\APIs\Phones\Show\OutputItems;
 
-use App\Application\APIs\Helpers\Hateoas\Link;
+use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
 use App\Application\APIs\Interfaces\OutputItemInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use Doctrine\Common\Collections\Collection;
@@ -127,7 +127,12 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     private $thickness;
 
     /**
-     * @var string[]
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Helpers\Hateoas\Link::class))
+     * )
+     *
+     * @var LinkInterface
      */
     private $links;
 
@@ -135,11 +140,11 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
      * PhoneOutput constructor.
      *
      * @param PhoneInterface $phone
-     * @param Link[]|array $links
+     * @param LinkInterface $links
      */
     public function __construct(
         PhoneInterface $phone,
-        array $links
+        LinkInterface $links
     ) {
         $this->id = $phone->getId();
         $this->brand = $phone->getBrand();
@@ -334,9 +339,9 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     }
 
     /**
-     * @return string[]
+     * @return LinkInterface
      */
-    public function getLinks(): array
+    public function getLinks(): LinkInterface
     {
         return $this->links;
     }
