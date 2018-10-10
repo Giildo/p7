@@ -3,21 +3,16 @@
 namespace App\Application\APIs\Users\OutputItems;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
+use App\Application\APIs\Users\OutputItems\Interfaces\ClientOutputInterface;
 use App\Application\APIs\Users\OutputItems\Interfaces\OutputUsersItemInterface;
-use App\Domain\Models\Interfaces\ClientInterface;
 use App\Domain\Models\Interfaces\UserInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
 
 class UserOutput implements OutputUsersItemInterface
 {
     /**
-     * @SWG\Property(
-     *     type="string"
-     * )
-     *
-     * @var Uuid
+     * @var string
      */
     private $id;
 
@@ -37,9 +32,12 @@ class UserOutput implements OutputUsersItemInterface
     private $roles;
 
     /**
-     * @SWG\Property(ref=@Model(type=App\Domain\Models\Client::class))
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Users\OutputItems\ClientOutput::class))
+     * )
      *
-     * @var ClientInterface
+     * @var ClientOutputInterface
      */
     private $client;
 
@@ -60,18 +58,18 @@ class UserOutput implements OutputUsersItemInterface
      */
     public function __construct(UserInterface $user, $links)
     {
-        $this->id = $user->getId();
+        $this->id = $user->getId()->toString();
         $this->username = $user->getUsername();
         $this->password = $user->getPassword();
         $this->roles = $user->getRoles();
-        $this->client = $user->getClient();
+        $this->client = (new ClientOutput())->create($user->getClient());
         $this->links = $links;
     }
 
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getId(): Uuid
+    public function getId(): string
     {
         return $this->id;
     }
@@ -101,9 +99,9 @@ class UserOutput implements OutputUsersItemInterface
     }
 
     /**
-     * @return ClientInterface
+     * @return ClientOutputInterface
      */
-    public function getClient(): ClientInterface
+    public function getClient(): ClientOutputInterface
     {
         return $this->client;
     }

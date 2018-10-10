@@ -5,7 +5,6 @@ namespace App\Domain\Models;
 use App\Domain\Models\Interfaces\ClientInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Swagger\Annotations as SWG;
 
 /**
  * Class User
@@ -17,10 +16,6 @@ use Swagger\Annotations as SWG;
 class Client implements ClientInterface
 {
     /**
-     * @SWG\Property(
-     *     type="string"
-     * )
-     *
      * @var Uuid
      *
      * @ORM\Id()
@@ -45,11 +40,6 @@ class Client implements ClientInterface
     private $password;
 
     /**
-     * @SWG\Property(
-     *     type="array",
-     *     @SWG\Items(type="string")
-     * )
-     *
      * @var string[]
      *
      * @ORM\Column(type="array")
