@@ -43,8 +43,7 @@ class TokenExpiredSubscriber extends BadTokenSubscriber implements EventSubscrib
     {
         $event->setResponse(
             $this->JSONResponder->response(
-                $this->contentResponse,
-                Response::HTTP_UNAUTHORIZED
+                $this->contentResponse, null, Response::HTTP_UNAUTHORIZED
             )
         );
     }

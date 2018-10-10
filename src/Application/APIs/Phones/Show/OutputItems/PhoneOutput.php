@@ -153,7 +153,7 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
         LinkInterface $links
     ) {
         $this->id = $phone->getId();
-        $this->brand = $phone->getBrand()->getName();
+        $this->brand = $phone->getBrand();
         $this->os = $phone->getOs();
         $this->memories = $phone->getMemories();
         $this->ram = $phone->getRam();

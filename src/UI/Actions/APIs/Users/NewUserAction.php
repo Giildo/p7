@@ -89,6 +89,6 @@ class NewUserAction
 
         $output = $this->userSaver->save($userInputItem);
 
-        return $this->JSONResponder->response($output, 201);
+        return $this->JSONResponder->response($output, $request, 201);
     }
 }

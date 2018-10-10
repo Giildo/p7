@@ -8,6 +8,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShowPhoneAction
@@ -63,13 +64,14 @@ class ShowPhoneAction
      * @Security(name="Bearer")
      *
      * @param string $id
+     * @param Request $request
      *
      * @return Response
      */
-    public function show(string $id): Response
+    public function show(string $id, Request $request): Response
     {
         $output = $this->loader->load($id);
 
-        return $this->JSONResponder->response($output);
+        return $this->JSONResponder->response($output, $request);
     }
 }
