@@ -40,8 +40,8 @@ class Loader implements LoaderInterface
      *
      * @return OutputItemInterface
      *
-     * @throws NonUniqueResultException
      * @throws ItemNotFoundException
+     * @throws NonUniqueResultException
      */
     public function load(string $id): OutputItemInterface
     {

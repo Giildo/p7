@@ -6,11 +6,12 @@ use App\Application\APIs\Interfaces\InputFiltersInterface;
 use App\Application\APIs\Phones\All\InputFilters\Interfaces\InputFiltersPhoneInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use App\Domain\Models\Phone;
+use App\Domain\Repositories\Interfaces\RepositoryCacheInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 
-class PhoneRepository extends ServiceEntityRepository
+class PhoneRepository extends ServiceEntityRepository implements RepositoryCacheInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -24,9 +25,11 @@ class PhoneRepository extends ServiceEntityRepository
      */
     public function loadPhonesWithFilters(?InputFiltersInterface $inputFilters = null): array
     {
-        $qb = $this->createQueryBuilder('phone')
-                   ->innerJoin('phone.brand', 'brand')
-                   ->addSelect('brand');
+        $qb =  $this->_em->createQuery('SELECT p FROM App\Domain\Models\Phone p');
+
+        if (!is_null($inputFilters->getCategory())) {
+            $qb = $this->_em->createQuery('SELECT p FROM App\Domain\Models\Phone p JOIN p.brand b WHERE b.id = :id');
+        }
 
         if ($inputFilters->getLimit() !== 0) {
             $qb->setMaxResults($inputFilters->getLimit());
@@ -37,11 +40,14 @@ class PhoneRepository extends ServiceEntityRepository
         }
 
         if (!is_null($inputFilters->getCategory())) {
-            $qb->where('phone.brand = :brand')
-               ->setParameter('brand', $inputFilters->getCategory());
+            return $qb->useResultCache(true)
+                ->setResultCacheLifetime(self::TTL)
+                ->execute(['id' => $inputFilters->getCategory()]);
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->useResultCache(true)
+            ->setResultCacheLifetime(self::TTL)
+            ->getResult();
     }
 
     /**
@@ -53,10 +59,10 @@ class PhoneRepository extends ServiceEntityRepository
      */
     public function loadOnePhoneById(string $id): ?PhoneInterface
     {
-        return $this->createQueryBuilder('phone')
-                    ->where('phone.id = :id')
-                    ->setParameter('id', $id)
-                    ->getQuery()
-                    ->getOneOrNullResult();
+        return $this->_em->createQuery("SELECT p FROM App\Domain\Models\Phone p WHERE p.id = :id")
+            ->useResultCache(true)
+            ->setResultCacheLifetime(self::TTL)
+            ->setParameter('id', $id)
+            ->getOneOrNullResult();
     }
 }

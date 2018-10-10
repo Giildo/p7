@@ -88,6 +88,6 @@ class ShowUserAction
 
         $output = $this->loaderOneUser->load($input);
 
-        return $this->JSONResponder->response($output);
+        return $this->JSONResponder->response($output, $request);
     }
 }

@@ -4,11 +4,12 @@ namespace App\Domain\Repositories;
 
 use App\Domain\Models\Client;
 use App\Domain\Models\Interfaces\ClientInterface;
+use App\Domain\Repositories\Interfaces\RepositoryCacheInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 
-class ClientRepository extends ServiceEntityRepository
+class ClientRepository extends ServiceEntityRepository implements RepositoryCacheInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -24,10 +25,10 @@ class ClientRepository extends ServiceEntityRepository
      */
     public function loadOneClientById(string $id): ClientInterface
     {
-        return $this->createQueryBuilder('client')
-            ->where('client.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
+        return $this->_em->createQuery("SELECT p FROM App\Domain\Models\Phone p WHERE p.id = :id")
+                         ->setParameter('id', $id)
+                         ->useResultCache(true)
+                         ->setResultCacheLifetime(self::TTL)
+                         ->getOneOrNullResult();
     }
 }

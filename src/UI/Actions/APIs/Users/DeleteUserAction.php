@@ -75,6 +75,6 @@ class DeleteUserAction
     {
         $this->userHandler->handle($request);
 
-        return $this->JSONResponder->response(null, Response::HTTP_NO_CONTENT);
+        return $this->JSONResponder->response(null, $request, Response::HTTP_NO_CONTENT);
     }
 }

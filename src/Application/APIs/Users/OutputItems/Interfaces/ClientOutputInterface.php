@@ -2,11 +2,10 @@
 
 namespace App\Application\APIs\Users\OutputItems\Interfaces;
 
-use App\Application\APIs\Interfaces\OutputItemInterface;
+use App\Application\APIs\Interfaces\SubObjectInterface;
 
-interface OutputUsersItemInterface extends OutputItemInterface
+interface ClientOutputInterface extends SubObjectInterface
 {
-
     /**
      * @return string
      */
@@ -23,12 +22,7 @@ interface OutputUsersItemInterface extends OutputItemInterface
     public function getPassword(): string;
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array;
-
-    /**
-     * @return ClientOutputInterface
-     */
-    public function getClient(): ClientOutputInterface;
 }

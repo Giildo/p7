@@ -4,13 +4,14 @@ namespace App\Domain\Repositories;
 
 use App\Domain\Models\Interfaces\UserInterface;
 use App\Domain\Models\User;
+use App\Domain\Repositories\Interfaces\RepositoryCacheInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements RepositoryCacheInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -24,13 +25,11 @@ class UserRepository extends ServiceEntityRepository
      */
     public function loadUsersByClientId(string $id): array
     {
-        return $this->createQueryBuilder('user')
-            ->innerJoin('user.client', 'client')
-            ->where('client.id = :clientId')
-            ->setParameter('clientId', $id)
-            ->addSelect('client')
-            ->getQuery()
-            ->getResult();
+        return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN user.client c WHERE c.id = :clientId")
+                         ->setParameter('clientId', $id)
+                         ->useResultCache(true)
+                         ->setResultCacheLifetime(self::TTL)
+                         ->getResult();
     }
 
     /**
@@ -43,14 +42,11 @@ class UserRepository extends ServiceEntityRepository
      */
     public function loadOneUserByClientUsernameAndUserId(string $userId, string $clientId): ?User
     {
-        return $this->createQueryBuilder('user')
-            ->innerJoin('user.client', 'client')
-            ->where('client.id = :clientId')
-            ->andWhere('user.id = :userId')
-            ->setParameters(['userId' => $userId, 'clientId' => $clientId])
-            ->addSelect('client')
-            ->getQuery()
-            ->getOneOrNullResult();
+        return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN user.client c WHERE c.id = :clientId AND u.id = :userId")
+                         ->setParameters(['userId' => $userId, 'clientId' => $clientId])
+                         ->useResultCache(true)
+                         ->setResultCacheLifetime(self::TTL)
+                         ->getOneOrNullResult();
     }
 
     /**
