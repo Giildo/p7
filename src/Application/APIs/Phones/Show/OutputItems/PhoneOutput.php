@@ -3,32 +3,28 @@
 namespace App\Application\APIs\Phones\Show\OutputItems;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
-use App\Application\APIs\Interfaces\OutputItemInterface;
-use App\Domain\Models\Interfaces\BrandInterface;
+use App\Application\APIs\Phones\OutputItems\BrandOutput;
+use App\Application\APIs\Phones\OutputItems\Interfaces\BrandOutputInterface;
+use App\Application\APIs\Phones\Show\OutputItems\Interfaces\MemoryOutputInterface;
+use App\Application\APIs\Phones\Show\OutputItems\Interfaces\PhoneOutputInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
-use Doctrine\Common\Collections\Collection;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
 
-class PhoneOutput implements PhoneInterface, OutputItemInterface
+class PhoneOutput implements PhoneOutputInterface
 {
     /**
-     * @SWG\Property(
-     *     type="string"
-     * )
-     *
-     * @var Uuid
+     * @var string
      */
     private $id;
 
     /**
      * @SWG\Property(
      *     type="array",
-     *     @SWG\Items(ref=@Model(type=App\Domain\Models\Brand::class))
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Phones\OutputItems\BrandOutput::class))
      * )
      *
-     * @var BrandInterface
+     * @var BrandOutputInterface
      */
     private $brand;
 
@@ -40,10 +36,10 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     /**
      * @SWG\Property(
      *     type="array",
-     *     @SWG\Items(ref=@Model(type=App\Domain\Models\Memory::class))
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Phones\Show\OutputItems\MemoryOutput::class))
      * )
      *
-     * @var Collection
+     * @var MemoryOutputInterface[]|array
      */
     private $memories;
 
@@ -152,10 +148,9 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
         PhoneInterface $phone,
         LinkInterface $links
     ) {
-        $this->id = $phone->getId();
-        $this->brand = $phone->getBrand();
+        $this->id = $phone->getId()->toString();
+        $this->brand = (new BrandOutput())->create($phone->getBrand());
         $this->os = $phone->getOs();
-        $this->memories = $phone->getMemories();
         $this->ram = $phone->getRam();
         $this->battery = $phone->getBattery();
         $this->sim = $phone->getSim();
@@ -174,20 +169,24 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
         $this->weight = $phone->getWeight();
         $this->thickness = $phone->getThickness();
         $this->links = $links;
+
+        foreach ($phone->getMemories() as $memory) {
+            $this->memories[] = (new MemoryOutput())->create($memory);
+        }
     }
 
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getId(): Uuid
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @return BrandInterface
+     * @return BrandOutputInterface
      */
-    public function getBrand(): BrandInterface
+    public function getBrand(): BrandOutputInterface
     {
         return $this->brand;
     }
@@ -201,9 +200,9 @@ class PhoneOutput implements PhoneInterface, OutputItemInterface
     }
 
     /**
-     * @return Collection
+     * @return MemoryOutputInterface[]|array
      */
-    public function getMemories(): Collection
+    public function getMemories(): array
     {
         return $this->memories;
     }

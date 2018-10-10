@@ -5,7 +5,6 @@ namespace App\Domain\Models;
 use App\Domain\Models\Interfaces\BrandInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Swagger\Annotations as SWG;
 
 /**
  * Class Brand
@@ -17,10 +16,6 @@ use Swagger\Annotations as SWG;
 class Brand implements BrandInterface
 {
     /**
-     * @SWG\Property(
-     *     type="string"
-     * )
-     *
      * @var Uuid
      *
      * @ORM\Id()

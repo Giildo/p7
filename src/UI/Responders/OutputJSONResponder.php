@@ -45,7 +45,7 @@ class OutputJSONResponder implements OutputJSONResponderInterface
             $headers ?: self::CONTENT_TYPE
         );
 
-        if ($request->isMethodCacheable()) {
+        if (!is_null($request) && $request->isMethodCacheable()) {
             $response->setEtag(md5($response->getContent()));
             $response->setPublic();
             $response->isNotModified($request);
