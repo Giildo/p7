@@ -59,7 +59,7 @@ class User implements UserInterface
      * @param string $username
      * @param string $password
      * @param array $roles
-     * @param Client $client
+     * @param ClientInterface $client
      */
     public function __construct(
         string $username,

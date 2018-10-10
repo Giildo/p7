@@ -36,8 +36,10 @@ class UserBuilder implements UserBuilderInterface
      *
      * @return UserBuilderInterface
      */
-    public function build(InputItemInterface $inputItem, ClientInterface $client): UserBuilderInterface
-    {
+    public function build(
+        InputItemInterface $inputItem,
+        ClientInterface $client
+    ): UserBuilderInterface {
         $this->user = new User(
             $inputItem->getUsername(),
             $this->encoderFactory->getEncoder(User::class)->encodePassword($inputItem->getPassword(), ''),
