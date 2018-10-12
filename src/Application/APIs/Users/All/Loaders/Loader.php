@@ -32,8 +32,7 @@ class Loader implements LoaderUserInterface
     public function __construct(
         UserRepository $userRepository,
         HateoasBuilderInterface $hateoasBuilder
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->hateoasBuilder = $hateoasBuilder;
     }

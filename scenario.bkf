@@ -1,0 +1,9 @@
+name "A build made of scenario"
+
+scenario
+    name "Scenario Name"
+    endpoint "http://192.168.0.25:8007/"
+
+    visit url('/api/phones')
+        header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1MzkyNDE0NTUsImV4cCI6MTUzOTI0NTA1NSwicm9sZXMiOlsiUk9MRV9DTElFTlQiXSwidXNlcm5hbWUiOiJEb2VTYXJsIn0.fGifgt8_23drNOTYnev3s2F_eAuzpJbLnoqLerN0WMSdK3uMnHOEIDInUnV37Y84fhPhWqsFbB6dxcoEXlcYb4buITRqpcUlrl4doSDkan5BQfMhuOXhgjSkF8RzwB1EK_xCwKEdXaaBnwzeuICgNndvzZ_QnlqqrKm-6NV1hyWgcAmq2wkdQO_XLd9usz6wBOJ2q_rRSvIHChC7akDcyD1FgRhUuzk6zw_qbEhNfpHFOZbmEAWt_FZYoKyqTC7g3bnY6OqcW_3sYutocMeosgQXuZK2G9B1l4CZIFA5y2TJvj07I-Vz2wbkCYKyUkp9twqDQqsFScVT2LegeUELPm1p45Hf9xqLi6A_UPksJYu9O_70i50s-W-14txB3g_q0U3L9fw7zQ9zBsrydP5oXqvbaA4eQNwsusKoUUDL9FjNdHyWP2f-rRqrG_cug_qTn70pmod7qh3Zj39NOnDdypSY8C690x_O17emnYbb6jWBhpj1aygv714t36Bi1vkMixTEdShiyi-H8baOIPod3HH1HfRFFlusD__QgWtyh1siZCZGogRjKpCpxT9yXQ9B_1KajrL_raeXL4tYfuHDlTArygTjsR6aem9XPrPOMGU9fOeebAtTlaqQfoUWkUSZkJkpVpnzuWckkX8-DR8nNi6lDmbGQy_a1vmmSulT6II"
+        expect status_code() == 200

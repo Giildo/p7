@@ -25,7 +25,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryCacheI
      */
     public function loadUsersByClientId(string $id): array
     {
-        return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN user.client c WHERE c.id = :clientId")
+        return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN u.client c WHERE c.id = :clientId")
                          ->setParameter('clientId', $id)
                          ->useResultCache(true)
                          ->setResultCacheLifetime(self::TTL)
@@ -42,11 +42,11 @@ class UserRepository extends ServiceEntityRepository implements RepositoryCacheI
      */
     public function loadOneUserByClientUsernameAndUserId(string $userId, string $clientId): ?User
     {
-        return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN user.client c WHERE c.id = :clientId AND u.id = :userId")
-                         ->setParameters(['userId' => $userId, 'clientId' => $clientId])
-                         ->useResultCache(true)
-                         ->setResultCacheLifetime(self::TTL)
-                         ->getOneOrNullResult();
+        return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN u.client c WHERE c.id = :clientId AND u.id = :userId")
+            ->setParameters(['userId' => $userId, 'clientId' => $clientId])
+            ->useResultCache(true)
+            ->setResultCacheLifetime(self::TTL)
+            ->getOneOrNullResult();
     }
 
     /**
