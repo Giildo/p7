@@ -40,10 +40,13 @@ class UserBuilder implements UserBuilderInterface
         InputItemInterface $inputItem,
         ClientInterface $client
     ): UserBuilderInterface {
+        $password = $this->encoderFactory->getEncoder(User::class)
+                                         ->encodePassword($inputItem->getPassword(), '');
+
         $this->user = new User(
             $inputItem->getUsername(),
-            $this->encoderFactory->getEncoder(User::class)->encodePassword($inputItem->getPassword(), ''),
-            $inputItem->getRoles(),
+            $password,
+            ['ROLE_USER'],
             $client
         );
 

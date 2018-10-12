@@ -57,20 +57,6 @@ class UserRepository extends ServiceEntityRepository implements RepositoryCacheI
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function saveUser(UserInterface $user): void
-    {
-        $this->_em->persist($user);
-        $this->_em->flush();
-    }
-
-    /**
-     * @param UserInterface $user
-     *
-     * @return void
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
     public function deleteUser(UserInterface $user): void
     {
         $this->_em->remove($user);

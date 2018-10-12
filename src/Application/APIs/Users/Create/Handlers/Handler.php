@@ -32,10 +32,17 @@ class Handler implements NewUserHandlerInterface
      */
     public function handle(Request $request): UserInputItemInterface
     {
-        return $this->serializer->deserialize(
+        /** @var UserInputItemInterface $client */
+        $client = $this->serializer->deserialize(
             $request->getContent(),
             UserInputItem::class,
             'json'
         );
+
+        $client->addClientId(
+            $request->attributes->get('client')
+        );
+
+        return $client;
     }
 }

@@ -17,12 +17,14 @@ interface UserInputItemInterface extends InputItemInterface
     public function getPassword(): string;
 
     /**
-     * @return string[]
+     * @return string
      */
-    public function getRoles(): array;
+    public function getClientId(): string;
 
     /**
-     * @return ClientInputItemInterface
+     * @param string $clientId
+     *
+     * @return void
      */
-    public function getClient(): ClientInputItemInterface;
+    public function addClientId(string $clientId): void;
 }

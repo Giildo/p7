@@ -10,16 +10,12 @@ use App\Application\APIs\Users\Create\InputItems\Interfaces\UserInputItemInterfa
 use App\Application\APIs\Users\Create\Saver\Interfaces\UserSaverInterface;
 use App\Application\APIs\Users\OutputItems\UserOutput;
 use App\Domain\Repositories\ClientRepository;
-use App\Domain\Repositories\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
 class Saver implements UserSaverInterface
 {
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
     /**
      * @var HateoasBuilder
      */
@@ -32,24 +28,28 @@ class Saver implements UserSaverInterface
      * @var ClientRepository
      */
     private $clientRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * Saver constructor.
-     * @param UserRepository $userRepository
      * @param HateoasBuilder $hateoasBuilder
      * @param UserBuilderInterface $userBuilder
      * @param ClientRepository $clientRepository
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
-        UserRepository $userRepository,
         HateoasBuilder $hateoasBuilder,
         UserBuilderInterface $userBuilder,
-        ClientRepository $clientRepository
+        ClientRepository $clientRepository,
+        EntityManagerInterface $entityManager
     ) {
-        $this->userRepository = $userRepository;
         $this->hateoasBuilder = $hateoasBuilder;
         $this->userBuilder = $userBuilder;
         $this->clientRepository = $clientRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -62,12 +62,13 @@ class Saver implements UserSaverInterface
      */
     public function save(UserInputItemInterface $inputItem): OutputItemInterface
     {
-        $client = $this->clientRepository->loadOneClientById($inputItem->getClient()->getId());
+        $client = $this->clientRepository->loadOneClientById($inputItem->getClientId());
 
         $user = $this->userBuilder->build($inputItem, $client)
                                   ->getEntity();
 
-        $this->userRepository->saveUser($user);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return new UserOutput(
             $user,
@@ -76,7 +77,7 @@ class Saver implements UserSaverInterface
                     LinkFactory::GET_SHOW,
                     'User_show',
                     [
-                        'client' => $inputItem->getClient()->getId(),
+                        'client' => $inputItem->getClientId(),
                         'id'     => $user->getId()
                     ]
                 ),
@@ -84,14 +85,14 @@ class Saver implements UserSaverInterface
                     LinkFactory::DELETE_SHOW,
                     'User_delete',
                     [
-                        'client' => $inputItem->getClient()->getId(),
+                        'client' => $inputItem->getClientId(),
                         'id'     => $user->getId()
                     ]
                 ),
                 $this->hateoasBuilder->build(
                     LinkFactory::GET_LIST,
                     'Users_list',
-                    ['client' => $inputItem->getClient()->getId()]
+                    ['client' => $inputItem->getClientId()]
                 )
             ]
         );

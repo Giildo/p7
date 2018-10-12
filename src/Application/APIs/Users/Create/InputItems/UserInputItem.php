@@ -2,7 +2,6 @@
 
 namespace App\Application\APIs\Users\Create\InputItems;
 
-use App\Application\APIs\Users\Create\InputItems\Interfaces\ClientInputItemInterface;
 use App\Application\APIs\Users\Create\InputItems\Interfaces\UserInputItemInterface;
 
 class UserInputItem implements UserInputItemInterface
@@ -16,32 +15,19 @@ class UserInputItem implements UserInputItemInterface
      */
     private $password;
     /**
-     * @var string[]
+     * @var string
      */
-    private $roles;
-    /**
-     * @var ClientInputItemInterface
-     */
-    private $client;
+    private $clientId;
 
     /**
      * UserInputItem constructor.
      * @param string $username
      * @param string $password
-     * @param array $roles
-     * @param array $client
      */
-    public function __construct(string $username, string $password, array $roles, array $client)
+    public function __construct(string $username, string $password)
     {
         $this->username = $username;
         $this->password = $password;
-        $this->roles = $roles;
-        $this->client = new ClientInputItem(
-            $client['id'],
-            $client['username'],
-            $client['password'],
-            $client['roles']
-        );
     }
 
     /**
@@ -61,18 +47,20 @@ class UserInputItem implements UserInputItemInterface
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    public function getRoles(): array
+    public function getClientId(): string
     {
-        return $this->roles;
+        return $this->clientId;
     }
 
     /**
-     * @return ClientInputItemInterface
+     * @param string $clientId
+     *
+     * @return void
      */
-    public function getClient(): ClientInputItemInterface
+    public function addClientId(string $clientId): void
     {
-        return $this->client;
+        $this->clientId = $clientId;
     }
 }
