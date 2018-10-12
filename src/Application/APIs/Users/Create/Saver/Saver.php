@@ -4,6 +4,7 @@ namespace App\Application\APIs\Users\Create\Saver;
 
 use App\Application\APIs\Helpers\Builders\Interfaces\UserBuilderInterface;
 use App\Application\APIs\Helpers\Hateoas\HateoasBuilder;
+use App\Application\APIs\Helpers\Hateoas\LinkFactory;
 use App\Application\APIs\Interfaces\OutputItemInterface;
 use App\Application\APIs\Users\Create\InputItems\Interfaces\UserInputItemInterface;
 use App\Application\APIs\Users\Create\Saver\Interfaces\UserSaverInterface;
@@ -72,28 +73,25 @@ class Saver implements UserSaverInterface
             $user,
             [
                 $this->hateoasBuilder->build(
+                    LinkFactory::GET_SHOW,
                     'User_show',
                     [
                         'client' => $inputItem->getClient()->getId(),
                         'id'     => $user->getId()
-                    ],
-                    'self',
-                    'GET'
+                    ]
                 ),
                 $this->hateoasBuilder->build(
+                    LinkFactory::DELETE_SHOW,
                     'User_delete',
                     [
                         'client' => $inputItem->getClient()->getId(),
                         'id'     => $user->getId()
-                    ],
-                    'self',
-                    'DELETE'
+                    ]
                 ),
                 $this->hateoasBuilder->build(
+                    LinkFactory::GET_LIST,
                     'Users_list',
-                    ['client' => $inputItem->getClient()->getId()],
-                    'list',
-                    'GET'
+                    ['client' => $inputItem->getClient()->getId()]
                 )
             ]
         );

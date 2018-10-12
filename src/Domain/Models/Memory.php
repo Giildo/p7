@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Models\Interfaces\MemoryInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="p7_memory")
  * @ORM\Entity()
  */
-class Memory
+class Memory implements MemoryInterface
 {
     /**
      * @var int

@@ -101,6 +101,6 @@ class ListUsersAction
 
         $outputList = $this->loaderUser->load($input);
 
-        return $this->JSONResponder->response($outputList);
+        return $this->JSONResponder->response($outputList, $request);
     }
 }

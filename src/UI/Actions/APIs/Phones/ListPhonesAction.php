@@ -88,6 +88,6 @@ class ListPhonesAction
 
         $outputList = $this->loader->load($input);
 
-        return $this->JSONResponder->response($outputList);
+        return $this->JSONResponder->response($outputList, $request);
     }
 }

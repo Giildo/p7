@@ -3,25 +3,27 @@
 namespace App\Application\APIs\Phones\All\OutputItems;
 
 use App\Application\APIs\Helpers\Hateoas\Interfaces\LinkInterface;
-use App\Application\APIs\Interfaces\OutputItemInterface;
+use App\Application\APIs\Phones\All\OutputItems\Interfaces\PhoneOutputInterface;
+use App\Application\APIs\Phones\OutputItems\BrandOutput;
+use App\Application\APIs\Phones\OutputItems\Interfaces\BrandOutputInterface;
 use App\Domain\Models\Interfaces\PhoneInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
 
-class PhoneOutput implements OutputItemInterface
+class PhoneOutput implements PhoneOutputInterface
 {
     /**
-     * @SWG\Property(
-     *     type="string"
-     * )
-     *
-     * @var Uuid
+     * @var string
      */
     private $id;
 
     /**
-     * @var string
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(ref=@Model(type=App\Application\APIs\Phones\OutputItems\BrandOutput::class))
+     * )
+     *
+     * @var BrandOutputInterface
      */
     private $brand;
 
@@ -55,25 +57,25 @@ class PhoneOutput implements OutputItemInterface
         PhoneInterface $phone,
         LinkInterface $links
     ) {
-        $this->id = $phone->getId();
-        $this->brand = $phone->getBrand()->getName();
+        $this->id = $phone->getId()->toString();
+        $this->brand = (new BrandOutput())->create($phone->getBrand());
         $this->os = $phone->getOs();
         $this->name = $phone->getName();
         $this->links = $links;
     }
 
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getId(): Uuid
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return BrandOutputInterface
      */
-    public function getBrand(): string
+    public function getBrand(): BrandOutputInterface
     {
         return $this->brand;
     }

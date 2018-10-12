@@ -3,6 +3,7 @@
 namespace App\UI\Responders\Interfaces;
 
 use App\Application\APIs\Interfaces\OutputItemInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 interface OutputJSONResponderInterface
@@ -11,6 +12,7 @@ interface OutputJSONResponderInterface
 
     /**
      * @param OutputItemInterface|null $content
+     * @param Request $request
      * @param int|null $statusCode
      * @param array|null $headers
      *
@@ -18,7 +20,8 @@ interface OutputJSONResponderInterface
      */
     public function response(
         ?OutputItemInterface $content = null,
+        ?Request $request = null,
         ?int $statusCode = Response::HTTP_OK,
         ?array $headers = null
-    );
+    ): Response;
 }

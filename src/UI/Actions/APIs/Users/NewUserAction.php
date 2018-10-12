@@ -62,6 +62,10 @@ class NewUserAction
      *     response="404",
      *     description="No user found in the database, please check your input parameters."
      * )
+     * @SWG\Response(
+     *     response="409",
+     *     description="A user with the same username exists. Please choose another username."
+     * )
      * @SWG\Parameter(
      *     name="client",
      *     in="path",
@@ -89,6 +93,6 @@ class NewUserAction
 
         $output = $this->userSaver->save($userInputItem);
 
-        return $this->JSONResponder->response($output, 201);
+        return $this->JSONResponder->response($output, $request, 201);
     }
 }
