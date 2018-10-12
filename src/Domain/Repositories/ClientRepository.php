@@ -25,7 +25,7 @@ class ClientRepository extends ServiceEntityRepository implements RepositoryCach
      */
     public function loadOneClientById(string $id): ClientInterface
     {
-        return $this->_em->createQuery("SELECT p FROM App\Domain\Models\Phone p WHERE p.id = :id")
+        return $this->_em->createQuery("SELECT c FROM App\Domain\Models\Client c WHERE c.id = :id")
                          ->setParameter('id', $id)
                          ->useResultCache(true)
                          ->setResultCacheLifetime(self::TTL)
