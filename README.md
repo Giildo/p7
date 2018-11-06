@@ -1,0 +1,2 @@
+# p7
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d4a41f9368c246d29255016878a4e044)](https://app.codacy.com/app/Giildo/p7?utm_source=github.com&utm_medium=referral&utm_content=Giildo/p7&utm_campaign=Badge_Grade_Dashboard)
