@@ -10,8 +10,10 @@
         "nelmio/api-doc-bundle": "^3.3",
         "ramsey/uuid-doctrine": "^1.4",
         "sensio/framework-extra-bundle": "^5.2",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "*",
         "symfony/console": "*",
+        "symfony/dotenv": "*",
         "symfony/event-dispatcher": "*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
@@ -23,7 +25,6 @@
     },
     "require-dev": {
         "blackfire/php-sdk": "^1.17",
-        "symfony/dotenv": "*",
         "symfony/web-server-bundle": "*"
     },
     "config": {
