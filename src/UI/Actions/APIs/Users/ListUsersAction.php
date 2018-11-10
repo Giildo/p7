@@ -4,7 +4,6 @@ namespace App\UI\Actions\APIs\Users;
 
 use App\Application\APIs\Users\All\Handlers\Interfaces\HandlerUsersInterface;
 use App\Application\APIs\Users\All\Loaders\Interfaces\LoaderUserInterface;
-use App\Domain\Repositories\UserRepository;
 use App\UI\Responders\Interfaces\OutputJSONResponderInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -20,10 +19,6 @@ class ListUsersAction
      */
     private $handler;
     /**
-     * @var UserRepository
-     */
-    private $userRepository;
-    /**
      * @var LoaderUserInterface
      */
     private $loaderUser;
@@ -35,18 +30,15 @@ class ListUsersAction
     /**
      * ListUsersAction constructor.
      * @param HandlerUsersInterface $handler
-     * @param UserRepository $userRepository
      * @param LoaderUserInterface $loaderUser
      * @param OutputJSONResponderInterface $JSONResponder
      */
     public function __construct(
         HandlerUsersInterface $handler,
-        UserRepository $userRepository,
         LoaderUserInterface $loaderUser,
         OutputJSONResponderInterface $JSONResponder
     ) {
         $this->handler = $handler;
-        $this->userRepository = $userRepository;
         $this->loaderUser = $loaderUser;
         $this->JSONResponder = $JSONResponder;
     }

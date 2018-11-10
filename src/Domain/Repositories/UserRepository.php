@@ -21,7 +21,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryCacheI
     /**
      * @param string $id
      *
-     * @return User[]|array
+     * @return UserInterface[]|array
      */
     public function loadUsersByClientId(string $id): array
     {
@@ -36,11 +36,11 @@ class UserRepository extends ServiceEntityRepository implements RepositoryCacheI
      * @param string $userId
      * @param string $clientId
      *
-     * @return User|null
+     * @return UserInterface|null
      *
      * @throws NonUniqueResultException
      */
-    public function loadOneUserByClientUsernameAndUserId(string $userId, string $clientId): ?User
+    public function loadOneUserByClientIdAndUserId(string $userId, string $clientId): ?UserInterface
     {
         return $this->_em->createQuery("SELECT u FROM App\Domain\Models\User u JOIN u.client c WHERE c.id = :clientId AND u.id = :userId")
             ->setParameters(['userId' => $userId, 'clientId' => $clientId])

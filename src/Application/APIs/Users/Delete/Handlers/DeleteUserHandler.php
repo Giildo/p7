@@ -38,7 +38,7 @@ class DeleteUserHandler implements DeleteUserHandlerInterface
      */
     public function handle(Request $request): void
     {
-        $user = $this->userRepository->loadOneUserByClientUsernameAndUserId(
+        $user = $this->userRepository->loadOneUserByClientIdAndUserId(
             $request->attributes->get('id'),
             $request->attributes->get('client')
         );

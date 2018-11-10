@@ -59,10 +59,6 @@ class NewUserAction
      *     @SWG\Schema(ref=@Model(type=App\Application\APIs\Users\OutputItems\UserOutput::class))
      * )
      * @SWG\Response(
-     *     response="404",
-     *     description="No user found in the database, please check your input parameters."
-     * )
-     * @SWG\Response(
      *     response="409",
      *     description="A user with the same username exists. Please choose another username."
      * )
@@ -93,6 +89,6 @@ class NewUserAction
 
         $output = $this->userSaver->save($userInputItem);
 
-        return $this->JSONResponder->response($output, $request, 201);
+        return $this->JSONResponder->response($output, $request, Response::HTTP_CREATED);
     }
 }

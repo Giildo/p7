@@ -48,7 +48,7 @@ class Loader implements LoaderOneUserInterface
     public function load(?InputFiltersInterface $inputFilters = null): ?OutputListInterface
     {
         try {
-            $user = $this->userRepository->loadOneUserByClientUsernameAndUserId(
+            $user = $this->userRepository->loadOneUserByClientIdAndUserId(
                 $inputFilters->getUserId(),
                 $inputFilters->getClientId()
             );
