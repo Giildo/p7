@@ -53,7 +53,9 @@ class ExceptionListener
                     $this->exceptionBuilder->build(
                         $exception->getMessage(),
                         self::NOT_FOUND
-                    ), null, self::NOT_FOUND
+                    ),
+                    null,
+                    self::NOT_FOUND
                 )
             );
         }
@@ -64,7 +66,9 @@ class ExceptionListener
                     $this->exceptionBuilder->build(
                         'Le nom d\'utilisateur existe déjà.',
                         self::CONFLICT
-                    ), null, self::CONFLICT
+                    ),
+                    null,
+                    self::CONFLICT
                 )
             );
         }

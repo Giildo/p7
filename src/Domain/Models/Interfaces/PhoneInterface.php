@@ -111,5 +111,4 @@ interface PhoneInterface
      * @return int
      */
     public function getThickness(): int;
-
 }

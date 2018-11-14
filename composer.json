@@ -25,6 +25,7 @@
     },
     "require-dev": {
         "blackfire/php-sdk": "^1.17",
+        "squizlabs/php_codesniffer": "^3.3",
         "symfony/web-server-bundle": "*"
     },
     "config": {

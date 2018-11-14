@@ -2,7 +2,6 @@
 
 namespace App\Domain\Models\Interfaces;
 
-
 /**
  * Class Memory
  * @package App\Domain\Model

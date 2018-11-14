@@ -2,7 +2,6 @@
 
 namespace App\Domain\Models\Interfaces;
 
-
 use Ramsey\Uuid\Uuid;
 
 /**

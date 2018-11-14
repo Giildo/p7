@@ -49,8 +49,7 @@ class Loader implements LoaderPhoneInterface
         $phones = $this->phoneRepository->loadPhonesWithFilters($inputFilters);
 
         if (empty($phones)) {
-            if (
-                is_null($inputFilters->getCategory()) &&
+            if (is_null($inputFilters->getCategory()) &&
                 $inputFilters->getOffset() === 0 &&
                 $inputFilters->getLimit() === 0
             ) {

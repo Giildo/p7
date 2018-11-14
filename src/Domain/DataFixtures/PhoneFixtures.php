@@ -20,9 +20,9 @@ class PhoneFixtures extends Fixture
     {
         $memories = [
             '64'  => new Memory(64),
-            '128' => New Memory(128),
-            '256' => New Memory(256),
-            '512' => New Memory(512),
+            '128' => new Memory(128),
+            '256' => new Memory(256),
+            '512' => new Memory(512),
         ];
         foreach ($memories as $memory) {
             $manager->persist($memory);

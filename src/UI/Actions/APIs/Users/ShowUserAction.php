@@ -37,8 +37,7 @@ class ShowUserAction
         HandlerUserInterface $handlerUser,
         LoaderOneUserInterface $loaderOneUser,
         OutputJSONResponderInterface $JSONResponder
-    )
-    {
+    ) {
         $this->handlerUser = $handlerUser;
         $this->loaderOneUser = $loaderOneUser;
         $this->JSONResponder = $JSONResponder;
